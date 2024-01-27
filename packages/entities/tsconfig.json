@@ -1,0 +1,4 @@
+{
+  "extends": "@pet-shop/typescript-config/vite.json",
+  "exclude": ["node_modules"]
+}

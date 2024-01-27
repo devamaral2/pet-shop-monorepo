@@ -1,0 +1,20 @@
+{
+  "devDependencies": {
+    "@pet-shop/eslint-config": "*",
+    "@pet-shop/typescript-config": "*",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.2"
+  },
+  "exports": {
+    "./client": "./src/entities/client/client.ts",
+    "./pet": "./src/entities/pet/pet.ts",
+    "./schedule": "./src/entities/schedule/schedule.ts"
+  },
+  "name": "@pet-shop/entities",
+  "scripts": {
+    "lint": "eslint \"**/*.ts\"",
+    "test": "vitest"
+  },
+  "version": "1.0.0"
+}
