@@ -8,7 +8,7 @@ export const clientMock = new Client({
   pet,
 });
 
-export const clientWithWrongEmail = () =>
+export const clientWithWrongEmailMock = () =>
   new Client({
     name: "Eduardo Gomes",
     email: "eduardo.gomes",
