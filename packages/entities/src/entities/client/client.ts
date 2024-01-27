@@ -8,12 +8,16 @@ export interface ClientProps {
   pet: Pet;
 }
 export class Client {
-  private props: ClientProps;
+  private _name: string;
+  private _email: string;
+  private _pet: Pet;
   constructor(props: ClientProps) {
     if (!this.emailTest(props.email)) {
       throw new Error(clientMessangesEnum.CREATE_WITH_INVALID_EMAIL);
     }
-    this.props = props;
+    this._name = props.name;
+    this._email = props.email;
+    this._pet = props.pet;
   }
 
   private emailTest(email: string) {
@@ -21,13 +25,21 @@ export class Client {
   }
 
   get email() {
-    return this.props.email;
+    return this._email;
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  get pet() {
+    return this._pet;
   }
 
   set email(email: string) {
     if (!this.emailTest(email)) {
       throw new Error(clientMessangesEnum.UPDATE_WITH_INVALID_EMAIL);
     }
-    this.props.email = email;
+    this._email = email;
   }
 }

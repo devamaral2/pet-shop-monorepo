@@ -6,19 +6,25 @@ export interface PetProps {
   species: SpeciesEnum;
 }
 export class Pet {
-  private props: PetProps;
+  private _name: string;
+  private _species: SpeciesEnum;
   constructor(props: PetProps) {
     if (!this.isValidSpecies(props.species)) {
       throw new Error(petMessangesEnum.CREATE_WITH_INVALID_SPECIES);
     }
-    this.props = props;
+    this._name = props.name;
+    this._species = props.species;
   }
 
   isValidSpecies(species: SpeciesEnum): boolean {
     const validSpecies = Object.values(SpeciesEnum);
     return validSpecies.includes(species);
   }
-  get species() {
-    return this.props.species;
+
+  get name() {
+    return this._name;
+  }
+  get species(): SpeciesEnum {
+    return this._species;
   }
 }
