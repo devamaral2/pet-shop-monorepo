@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
+import { clientMessangesEnum } from "../enum/clientMessanges.enum";
 import { clientMock, clientWithWrongEmailMock } from "./client.mock";
 
 describe("Testes da entidade Client", () => {
   it("Não é possível criar um Client com formato de email errado", () => {
     expect(clientWithWrongEmailMock).toThrowError(
-      "Um client não pode ser criado com um formato de email inválido"
+      clientMessangesEnum.CREATE_WITH_INVALID_EMAIL
     );
   });
 
@@ -17,7 +18,7 @@ describe("Testes da entidade Client", () => {
       clientMock.email = "eduardo.gomes";
     };
     expect(updateEmail).toThrowError(
-      "Um client não pode receber um formato de email inválido"
+      clientMessangesEnum.UPDATE_WITH_INVALID_EMAIL
     );
   });
 });

@@ -1,5 +1,6 @@
 import { regex } from "../../utils/regex";
 import { Pet } from "../pet/pet";
+import { clientMessangesEnum } from "./enum/clientMessanges.enum";
 
 export interface ClientProps {
   name: string;
@@ -10,9 +11,7 @@ export class Client {
   private props: ClientProps;
   constructor(props: ClientProps) {
     if (!this.emailTest(props.email)) {
-      throw new Error(
-        "Um client não pode ser criado com um formato de email inválido"
-      );
+      throw new Error(clientMessangesEnum.CREATE_WITH_INVALID_EMAIL);
     }
     this.props = props;
   }
@@ -27,9 +26,7 @@ export class Client {
 
   set email(email: string) {
     if (!this.emailTest(email)) {
-      throw new Error(
-        "Um client não pode receber um formato de email inválido"
-      );
+      throw new Error(clientMessangesEnum.UPDATE_WITH_INVALID_EMAIL);
     }
     this.props.email = email;
   }
