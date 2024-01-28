@@ -1,3 +1,4 @@
+import client from "./client.route";
 import schedule from "./schedule.route";
 
-export { schedule };
+export { client, schedule };

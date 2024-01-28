@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import { connection } from "../database/connection";
 import { errorMiddleware } from "./middlewares/error.middleware";
+import * as Routes from "./routes";
 
 class Server {
   public app: express.Express;
@@ -29,9 +30,8 @@ class Server {
 
   private routes(): void {
     this.app.use(express.json());
-    // this.app.use("/automovel", Routes.automovel);
-    // this.app.use("/motorista", Routes.motorista);
-    // this.app.use("/registro", Routes.registro);
+    this.app.use("/schedule", Routes.schedule);
+    this.app.use("/client", Routes.client);
     this.app.use(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       (error: unknown, _req: Request, res: Response, _next: NextFunction) =>
