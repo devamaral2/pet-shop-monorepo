@@ -7,10 +7,13 @@
     "vitest": "^1.2.2"
   },
   "exports": {
+    "./IFindAllSchedules": "./src/interfaces/findAllSchedulesProps.interface.ts",
     "./client": "./src/entities/client/client.ts",
     "./errorsDictionary": "./src/utils/errors.dictionary.ts",
     "./pet": "./src/entities/pet/pet.ts",
-    "./schedule": "./src/entities/schedule/schedule.ts"
+    "./schedule": "./src/entities/schedule/schedule.ts",
+    "./speciesenum": "./src/entities/pet/enum/species.enum.ts",
+    "./statusenum": "./src/entities/schedule/enum/status.enum.ts"
   },
   "main": "./src/index.ts",
   "name": "@pet-shop/entities",
