@@ -31,7 +31,6 @@ async function start() {
     await db.query(clientsQuery);
     const allClients = await db.query("SELECT * FROM clients");
     const schedulesQuery = creatingScheduleSeedQuery(allClients.rows);
-    console.info(schedulesQuery);
     console.info("Creating Schedules...");
     await db.query(schedulesQuery);
     console.info("Seed finished!");
