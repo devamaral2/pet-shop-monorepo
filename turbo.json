@@ -1,5 +1,12 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDotEnv": [
+    "PGSQL_NAME",
+    "PGSQL_USER",
+    "PGSQL_PASSWORD",
+    "PGSQL_PORT",
+    "PORT"
+  ],
   "pipeline": {
     "build": {
       "dependsOn": [
