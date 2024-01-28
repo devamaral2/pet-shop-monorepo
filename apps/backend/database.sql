@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS clients (
 CREATE TABLE IF NOT EXISTS schedules (
     id UUID NOT NULL DEFAULT uuid_generate_v4(),
     timestamp BIGINT NOT NULL,
-    status enum_status NOT NULL,
+    status enum_status NOT NULL NOT NULL DEFAULT 'scheduled',
     client_id UUID NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (client_id) REFERENCES clients(id)
