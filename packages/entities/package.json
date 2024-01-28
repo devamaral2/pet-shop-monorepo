@@ -8,9 +8,11 @@
   },
   "exports": {
     "./client": "./src/entities/client/client.ts",
+    "./errorsDictionary": "./src/utils/errors.dictionary.ts",
     "./pet": "./src/entities/pet/pet.ts",
     "./schedule": "./src/entities/schedule/schedule.ts"
   },
+  "main": "./src/index.ts",
   "name": "@pet-shop/entities",
   "scripts": {
     "lint": "eslint \"**/*.ts\"",

@@ -1,5 +1,5 @@
-import { ErrorsDictionary } from "index";
 import { describe, expect, it } from "vitest";
+import { ErrorsDictionary } from "../../..";
 import { clientMock, clientWithWrongEmailMock } from "./client.mock";
 
 describe("Testes da entidade Client", () => {
@@ -18,7 +18,7 @@ describe("Testes da entidade Client", () => {
       clientMock.email = "eduardo.gomes";
     };
     expect(updateEmail).toThrowError(
-      ErrorsDictionary.UPDATE_SCHEDULE_WITH_INVALID_STATUS.key
+      ErrorsDictionary.UPDATE_CLIENT_WITH_INVALID_EMAIL.key
     );
   });
 });

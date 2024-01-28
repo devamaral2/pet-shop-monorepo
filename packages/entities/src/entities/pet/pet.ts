@@ -1,4 +1,4 @@
-import { ErrorsDictionary } from "index";
+import { ErrorsDictionary } from "../..";
 import { SpeciesEnum } from "./enum/species.enum";
 
 export interface PetProps {

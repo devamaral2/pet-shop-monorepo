@@ -1,5 +1,5 @@
-import { Pet, ErrorsDictionary } from "index";
-import { regex } from "utils/regex";
+import { ErrorsDictionary, Pet } from "../..";
+import { regex } from "../../utils/regex";
 
 export interface ClientProps {
   name: string;

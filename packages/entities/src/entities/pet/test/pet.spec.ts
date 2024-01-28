@@ -1,5 +1,5 @@
-import { ErrorsDictionary } from "index";
 import { describe, expect, it } from "vitest";
+import { ErrorsDictionary } from "../../..";
 import { SpeciesEnum } from "../enum/species.enum";
 import { petMock, petWithWrongSpeciesMock } from "../pet.mock";
 
