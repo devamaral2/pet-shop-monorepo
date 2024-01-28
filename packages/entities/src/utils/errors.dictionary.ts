@@ -30,4 +30,19 @@ export const ErrorsDictionary: Record<string, ErrorValue> = {
     status: 400,
     message: "Os status válidos são: scheduled, canceled e done",
   },
+  UPDATE_SCHEDULE_WITH_INVALID_ID: {
+    key: "UPDATE_SCHEDULE_WITH_INVALID_ID",
+    status: 404,
+    message: "Não existe um schedule com o id informado",
+  },
+  CREATE_SCHEDULE_WITH_INVALID_CLIENT_ID: {
+    key: "CREATE_SCHEDULE_WITH_INVALID_CLIENT_ID",
+    status: 404,
+    message: "Não existe um client com o id informado",
+  },
+  CREATE_SCHEDULE_WITH_SCHEDULED_CLIENT: {
+    key: "CREATE_SCHEDULE_WITH_SCHEDULED_CLIENT",
+    status: 400,
+    message: "Não é possível criar um schedule para um client com schedule",
+  },
 };

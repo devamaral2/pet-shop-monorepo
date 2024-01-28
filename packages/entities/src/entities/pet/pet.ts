@@ -1,16 +1,16 @@
 import { ErrorsDictionary } from "../..";
 import { SpeciesEnum } from "./enum/species.enum";
 
-export interface PetProps {
+export interface IPet {
   name: string;
   species: SpeciesEnum;
   imageUrl?: string;
 }
-export class Pet {
+export class Pet implements IPet {
   private _name: string;
   private _species: SpeciesEnum;
   private _imageUrl?: string;
-  constructor(props: PetProps) {
+  constructor(props: IPet) {
     if (!this.isValidSpecies(props.species)) {
       throw new Error(ErrorsDictionary.CREATE_PET_WITH_INVALID_SPECIES.key);
     }

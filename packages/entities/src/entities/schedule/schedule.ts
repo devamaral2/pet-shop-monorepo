@@ -1,16 +1,17 @@
 import { ErrorsDictionary } from "../..";
-import { Client } from "../client/client";
+import { IClient } from "../client/client";
 import { StatusEnum } from "./enum/status.enum";
-interface CreateScheduleProps {
+export interface ISchedule {
   timestamp: number;
-  client: Client;
+  client: IClient;
+  status?: StatusEnum;
 }
 
-export class Schedule {
+export class Schedule implements ISchedule {
   private _timestamp: number;
   private _status: StatusEnum;
-  private _client: Client;
-  constructor(props: CreateScheduleProps) {
+  private _client: IClient;
+  constructor(props: ISchedule) {
     if (!this.isValidTimestamp(props.timestamp)) {
       throw new Error(
         ErrorsDictionary.CREATE_SCHEDULE_WITH_INVALID_TIMESTAMP.key

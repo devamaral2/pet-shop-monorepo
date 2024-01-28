@@ -1,16 +1,16 @@
-import { ErrorsDictionary, Pet } from "../..";
+import { ErrorsDictionary, IPet } from "../..";
 import { regex } from "../../utils/regex";
 
-export interface ClientProps {
+export interface IClient {
   name: string;
   email: string;
-  pet: Pet;
+  pet: IPet;
 }
-export class Client {
+export class Client implements IClient {
   private _name: string;
   private _email: string;
-  private _pet: Pet;
-  constructor(props: ClientProps) {
+  private _pet: IPet;
+  constructor(props: IClient) {
     if (!this.emailTest(props.email)) {
       throw new Error(ErrorsDictionary.CREATE_CLIENT_WITH_INVALID_EMAIL.key);
     }
