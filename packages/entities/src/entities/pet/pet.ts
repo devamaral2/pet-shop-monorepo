@@ -1,4 +1,4 @@
-import { petMessangesEnum } from "./enum/petMessanges.enum";
+import { ErrorsDictionary } from "index";
 import { SpeciesEnum } from "./enum/species.enum";
 
 export interface PetProps {
@@ -10,7 +10,7 @@ export class Pet {
   private _species: SpeciesEnum;
   constructor(props: PetProps) {
     if (!this.isValidSpecies(props.species)) {
-      throw new Error(petMessangesEnum.CREATE_WITH_INVALID_SPECIES);
+      throw new Error(ErrorsDictionary.CREATE_PET_WITH_INVALID_SPECIES.key);
     }
     this._name = props.name;
     this._species = props.species;

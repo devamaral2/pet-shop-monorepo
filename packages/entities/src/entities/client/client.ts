@@ -1,6 +1,5 @@
-import { regex } from "../../utils/regex";
-import { Pet } from "../pet/pet";
-import { clientMessangesEnum } from "./enum/clientMessanges.enum";
+import { Pet, ErrorsDictionary } from "index";
+import { regex } from "utils/regex";
 
 export interface ClientProps {
   name: string;
@@ -13,7 +12,7 @@ export class Client {
   private _pet: Pet;
   constructor(props: ClientProps) {
     if (!this.emailTest(props.email)) {
-      throw new Error(clientMessangesEnum.CREATE_WITH_INVALID_EMAIL);
+      throw new Error(ErrorsDictionary.CREATE_CLIENT_WITH_INVALID_EMAIL.key);
     }
     this._name = props.name;
     this._email = props.email;
@@ -38,7 +37,7 @@ export class Client {
 
   set email(email: string) {
     if (!this.emailTest(email)) {
-      throw new Error(clientMessangesEnum.UPDATE_WITH_INVALID_EMAIL);
+      throw new Error(ErrorsDictionary.UPDATE_CLIENT_WITH_INVALID_EMAIL.key);
     }
     this._email = email;
   }
