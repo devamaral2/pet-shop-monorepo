@@ -3,14 +3,20 @@ import { useCreateScheduleContext } from "../../context/createScheduleProvider";
 import { InputDate } from "../input/InputDate";
 import { DropSelect } from "./DropSelect";
 
-export function CreateScheduleForm() {
+export function CreateScheduleForm({ modalRef }: { modalRef: any }) {
   const { date, handleChangeDate, handleScheduleCreation } =
     useCreateScheduleContext();
   return (
     <VStack>
       <DropSelect />
       <InputDate handler={handleChangeDate} actualState={date} />
-      <Button colorScheme="green" onClick={handleScheduleCreation}>
+      <Button
+        colorScheme="green"
+        onClick={() => {
+          modalRef.current.closeModal();
+          handleScheduleCreation();
+        }}
+      >
         Criar
       </Button>
     </VStack>
