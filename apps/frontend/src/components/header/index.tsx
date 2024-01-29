@@ -1,15 +1,17 @@
 import { FormLabel, HStack, Heading, VStack } from "@chakra-ui/react";
+import { StatusEnum } from "@pet-shop/entities/statusenum";
 import { useGeneralContext } from "../../context/globalProvider";
+import { StatusMenu } from "../StatusMenu";
 import { Input } from "../input";
 import { InputDate } from "../input/InputDate";
 import { CreateScheduleModal } from "./CreateScheduleModal";
 import { ScheduleBtn } from "./ScheduleBtn";
 
 export function Header() {
-  const { data } = useGeneralContext();
-  console.log(data);
+  const { filters, setFilters } = useGeneralContext();
+  console.log(filters);
   return (
-    <VStack p="1rem" w="100%" maxW="1200px" spacing="2rem">
+    <VStack w="100%" maxW="1200px" spacing="2rem">
       <Heading as="h1" size="2xl">
         Agendamentos para petshop
       </Heading>
@@ -20,6 +22,16 @@ export function Header() {
           <HStack w="100%">
             <InputDate />
             <InputDate />
+            <StatusMenu
+              state={filters.status as StatusEnum & "all"}
+              steState={(newStatus) =>
+                setFilters({
+                  ...filters,
+                  status: newStatus as StatusEnum & "all",
+                })
+              }
+              isHeaderComponent
+            />
           </HStack>
         </VStack>
         <CreateScheduleModal>

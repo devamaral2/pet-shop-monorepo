@@ -22,7 +22,7 @@ export class ScheduleRepository implements IScheduleRepository {
     const offset = (page - 1) * limit;
 
     let query = `
-          SELECT s.*, c.*, p.*, c.name as client_name, p.name as pet_name
+    SELECT s.*, c.*, p.*, s.id as schedule_id, c.name as client_name, p.name as pet_name
           FROM schedules s
           JOIN clients c ON s.client_id = c.id
           JOIN pets p ON c.pet_id = p.id

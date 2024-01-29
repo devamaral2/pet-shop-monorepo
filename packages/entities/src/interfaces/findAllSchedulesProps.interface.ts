@@ -2,7 +2,7 @@ import { StatusEnum } from "..";
 
 export interface IFindAllSchedulesProps {
   page?: number;
-  status?: StatusEnum | "";
+  status?: StatusEnum & "all";
   clientSearch?: string;
   startTime?: number;
   endTime?: number;

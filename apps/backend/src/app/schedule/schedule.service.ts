@@ -80,7 +80,7 @@ export class ScheduleService {
     });
     const schedulesArray = response.schedules.map((schedule) => {
       return {
-        id: schedule.id,
+        id: schedule.schedule_id,
         timestamp: schedule.timestamp,
         status: schedule.status,
         client: {

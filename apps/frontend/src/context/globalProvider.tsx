@@ -1,6 +1,13 @@
 import { IFindAllSchedulesProps } from "@pet-shop/entities/IFindAllSchedules";
 import { useQuery } from "@tanstack/react-query";
-import { ReactNode, createContext, useContext, useMemo, useState } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import { FindAllSchedulesDto } from "../../../../packages/entities/src/interfaces/FindAllSchedules.dto";
 import { findAllSchedules } from "../services/general.service";
 export const GeneralContext = createContext<IGeneralContext>(
@@ -15,7 +22,7 @@ export function GeneralProvider({ children }: { children: ReactNode }) {
   const [filters, setFilters] = useState<IFindAllSchedulesProps>({
     clientSearch: "",
     page: 1,
-    status: "",
+    status: "all",
     startTime: 0,
     endTime: 0,
   });
@@ -45,7 +52,7 @@ export function GeneralProvider({ children }: { children: ReactNode }) {
   //     pushParameter('keyword', e.target.value);
   // };
 
-  const provided = { apiResponse, isFetching, start, filters };
+  const provided = { apiResponse, isFetching, start, filters, setFilters };
   const provide = useMemo(() => provided, [provided]);
 
   return (
@@ -60,4 +67,5 @@ export interface IGeneralContext {
   start: boolean;
   isFetching: boolean;
   filters: IFindAllSchedulesProps;
+  setFilters: Dispatch<React.SetStateAction<IFindAllSchedulesProps>>;
 }

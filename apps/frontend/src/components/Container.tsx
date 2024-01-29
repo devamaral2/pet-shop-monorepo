@@ -7,15 +7,13 @@ export function Container({ children, ...props }: StackProps) {
       width="100%"
       h="100vh"
       margin="auto"
-      alignItems="center"
-      justifyContent="center"
       p="2rem"
       {...props}
     >
       <Stack
         flexDirection={"column"}
         w="100%"
-        justifyContent="center"
+        // justifyContent="center"
         alignItems={"center"}
       >
         {children}

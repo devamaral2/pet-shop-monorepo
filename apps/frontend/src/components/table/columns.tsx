@@ -1,6 +1,8 @@
 import { ISchedule } from "@pet-shop/entities/schedule";
 import { StatusEnum } from "@pet-shop/entities/statusenum";
 import { TableColumn } from "react-data-table-component";
+import { updateSchedules } from "../../services/general.service";
+import { StatusMenu } from "../StatusMenu";
 
 export const columns: TableColumn<ISchedule & { id: string }>[] = [
   {
@@ -21,6 +23,13 @@ export const columns: TableColumn<ISchedule & { id: string }>[] = [
   },
   {
     name: "Status",
-    selector: (row) => row.status as StatusEnum,
+    cell: (row) => (
+      <StatusMenu
+        state={row.status as StatusEnum}
+        setState={(newState) => {
+          updateSchedules(row.id, newState as StatusEnum);
+        }}
+      />
+    ),
   },
 ];

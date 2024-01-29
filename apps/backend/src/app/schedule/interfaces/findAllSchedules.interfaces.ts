@@ -2,7 +2,8 @@ import { SpeciesEnum } from "@pet-shop/entities/speciesenum";
 import { StatusEnum } from "@pet-shop/entities/statusenum";
 
 export interface ScheduleFromDb {
-  id: string;
+  id?: string;
+  schedule_id?: string;
   timestamp: number;
   status: StatusEnum;
   client_id: string;
