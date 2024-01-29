@@ -1,5 +1,5 @@
 import { Container } from "./components/Container";
-import { Header } from "./components/Header";
+import { Header } from "./components/header";
 import { Table } from "./components/table/Table";
 import { GeneralProvider } from "./context/globalProvider";
 function App() {
