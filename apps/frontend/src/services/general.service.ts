@@ -16,7 +16,6 @@ export async function findAllSchedules(props: IFindAllQuery) {
       params.append(key, value.toString());
     }
   });
-  console.log(params.toString());
   const response = await fetch(
     `http://localhost:8000/schedule?${params.toString()}`,
     {
