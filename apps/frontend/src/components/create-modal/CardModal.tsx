@@ -63,7 +63,7 @@ export const CardModal = forwardRef(
 
           <ModalContent
             maxW="600px"
-            maxH="500px"
+            maxH="600px"
             p="2rem"
             mx=".5rem"
             className="card-transition"

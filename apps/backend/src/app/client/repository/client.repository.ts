@@ -11,12 +11,10 @@ export class ClientRepository implements IClientRepository {
   }
 
   public getAllClientsQuery({ clientSearch }: { clientSearch?: string }) {
-    return `SELECT c.*, p.*
+    return `SELECT c.*
      FROM clients c
-     JOIN pets p ON c.pet_id = p.id
-     LEFT JOIN schedules s ON c.id = s.client_id AND s.status = 'scheduled'
      WHERE c.name LIKE '%${clientSearch}%'
-     AND s.id IS NULL;`;
+     LIMIT 5;`;
   }
 
   async findById(id: string): Promise<ClientFromDb> {
@@ -35,7 +33,7 @@ export class ClientRepository implements IClientRepository {
   public async findAll({ clientSearch }: IFindAllClientsProps) {
     const db = await this.connection();
     const query = this.getAllClientsQuery({ clientSearch });
-    const schedules = await db.query(query, [clientSearch]);
+    const schedules = await db.query(query);
     return schedules.rows;
   }
 }

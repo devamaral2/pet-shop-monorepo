@@ -14,9 +14,10 @@ import { RightIconDebounceInputs } from "./RightInconDebounceInputs";
 interface Props extends InputProps {
   handler: (value: string) => void;
   actualState: string;
+  loading?: boolean;
 }
 
-export function Input({ handler, actualState, ...props }: Props) {
+export function Input({ handler, actualState, loading, ...props }: Props) {
   return (
     <VStack w="100%">
       <FormLabel>Pesquisar pelo nome do cliente</FormLabel>
@@ -37,7 +38,7 @@ export function Input({ handler, actualState, ...props }: Props) {
           {...props}
         />
         <InputRightElement>
-          <RightIconDebounceInputs />
+          <RightIconDebounceInputs loading={loading} />
         </InputRightElement>
       </InputGroup>
     </VStack>

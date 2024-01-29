@@ -1,5 +1,10 @@
+import queryClient from "./queryClient";
+
 export async function findAllClientsWithoutSchedule(clientSearch: string) {
-  const params = new URLSearchParams(clientSearch);
+  const params = new URLSearchParams();
+  if (clientSearch) {
+    params.append("clientSearch", clientSearch);
+  }
 
   const response = await fetch(
     `http://localhost:8000/client?${params.toString()}`,
@@ -12,14 +17,17 @@ export async function findAllClientsWithoutSchedule(clientSearch: string) {
   );
   return response.json();
 }
-// export function CreateSchedule(id: string, status: StatusEnum) {
-//     await fetch(`http://localhost:8000/schedule/${id}`, {
-//       method: "PATCH",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ status }),
-//     });
-//     queryClient.invalidateQueries(["schedules"]);
-//     return true;
-//   }
+export async function createSchedule(clientId: string, date: string) {
+  const timestamp = new Date(date).getTime();
+  await fetch(`http://localhost:8000/schedule`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      clientId,
+      timestamp,
+    }),
+  });
+  queryClient.invalidateQueries(["schedules"]);
+}

@@ -1,9 +1,9 @@
 import { Input as ChakraInput, InputProps, VStack } from "@chakra-ui/react";
 
 interface Props extends InputProps {
-  handler: (value: string, context: "startTime" | "endTime") => void;
+  handler: (value: string, context?: "startTime" | "endTime") => void;
   actualState: string;
-  context: "startTime" | "endTime";
+  context?: "startTime" | "endTime";
 }
 
 export function InputDate({ handler, actualState, context, ...props }: Props) {
@@ -16,7 +16,9 @@ export function InputDate({ handler, actualState, context, ...props }: Props) {
         _focus={{ borderColor: "green.600" }}
         color="black"
         value={actualState}
-        onChange={(e) => handler(e.target.value, context)}
+        onChange={(e) => {
+          context ? handler(e.target.value, context) : handler(e.target.value);
+        }}
         backgroundColor="#F3F6F6"
         focusBorderColor="#33B740"
         borderRadius="md"

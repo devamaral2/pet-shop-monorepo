@@ -1,22 +1,18 @@
 import { Button, VStack } from "@chakra-ui/react";
+import { useCreateScheduleContext } from "../../context/createScheduleProvider";
 import { InputDate } from "../input/InputDate";
 import { DropSelect } from "./DropSelect";
 
 export function CreateScheduleForm() {
+  const { date, handleChangeDate, handleScheduleCreation } =
+    useCreateScheduleContext();
   return (
     <VStack>
       <DropSelect />
-      <InputDate
-        handler={function (
-          value: string,
-          context: "startTime" | "endTime"
-        ): void {
-          throw new Error("Function not implemented.");
-        }}
-        actualState={""}
-        context={"startTime"}
-      />
-      <Button colorScheme="green">Criar</Button>
+      <InputDate handler={handleChangeDate} actualState={date} />
+      <Button colorScheme="green" onClick={handleScheduleCreation}>
+        Criar
+      </Button>
     </VStack>
   );
 }

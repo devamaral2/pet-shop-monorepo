@@ -1,9 +1,10 @@
 import { CheckboxIcon, Spinner } from "@chakra-ui/react";
 
-import { useGeneralContext } from "../../context/generalProvider";
+interface Props {
+  loading?: boolean;
+}
 
-export function RightIconDebounceInputs() {
-  const { isFetching, isDebouncing } = useGeneralContext();
-  if (isFetching || isDebouncing) return <Spinner boxSize=".8rem" />;
+export function RightIconDebounceInputs({ loading }: Props) {
+  if (loading) return <Spinner boxSize=".8rem" />;
   return <CheckboxIcon color="green.400" />;
 }

@@ -15,6 +15,7 @@ export function Header() {
     handleChangeClientQuery,
     clientQuery,
   } = useGeneralContext();
+  const { isFetching, isDebouncing } = useGeneralContext();
   return (
     <VStack w="100%" maxW="1200px" spacing="2rem">
       <Heading as="h1" size="2xl">
@@ -22,7 +23,11 @@ export function Header() {
       </Heading>
       <HStack w="100%" justifyContent={"space-between"} alignItems={"center"}>
         <VStack w="80%">
-          <Input handler={handleChangeClientQuery} actualState={clientQuery} />
+          <Input
+            handler={handleChangeClientQuery}
+            actualState={clientQuery}
+            loading={isFetching || isDebouncing}
+          />
           <HStack w="100%">
             <VStack w="100%">
               <FormLabel>Pesquisar por data</FormLabel>

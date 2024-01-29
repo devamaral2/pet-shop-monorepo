@@ -38,5 +38,4 @@ export async function updateSchedules(id: string, status: StatusEnum) {
     body: JSON.stringify({ status }),
   });
   queryClient.invalidateQueries(["schedules"]);
-  return true;
 }
