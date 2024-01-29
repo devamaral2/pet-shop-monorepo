@@ -1,7 +1,7 @@
 import { Container } from "./components/Container";
 import { Header } from "./components/header";
 import { Table } from "./components/table/Table";
-import { GeneralProvider } from "./context/globalProvider";
+import { GeneralProvider } from "./context/generalProvider";
 function App() {
   return (
     <Container>

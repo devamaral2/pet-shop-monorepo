@@ -3,7 +3,6 @@ import { Pool } from "pg";
 dotenv.config();
 
 export async function connection() {
-  console.info(process.env.PGSQL_USER);
   const pool = new Pool({
     user: process.env.PGSQL_USER,
     host: process.env.PGSQL_NAME,

@@ -62,8 +62,8 @@ export const CardModal = forwardRef(
           {overlay}
 
           <ModalContent
-            maxW="800px"
-            maxH="600px"
+            maxW="600px"
+            maxH="500px"
             p="2rem"
             mx=".5rem"
             className="card-transition"

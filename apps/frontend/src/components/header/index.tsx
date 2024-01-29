@@ -1,6 +1,6 @@
 import { FormLabel, HStack, Heading, VStack } from "@chakra-ui/react";
 import { StatusEnum } from "@pet-shop/entities/statusenum";
-import { useGeneralContext } from "../../context/globalProvider";
+import { useGeneralContext } from "../../context/generalProvider";
 import { StatusMenu } from "../StatusMenu";
 import { Input } from "../input";
 import { InputDate } from "../input/InputDate";
@@ -8,30 +8,51 @@ import { CreateScheduleModal } from "./CreateScheduleModal";
 import { ScheduleBtn } from "./ScheduleBtn";
 
 export function Header() {
-  const { filters, setFilters } = useGeneralContext();
-  console.log(filters);
+  const {
+    filters,
+    setFilters,
+    handleChangeTime,
+    handleChangeClientQuery,
+    clientQuery,
+  } = useGeneralContext();
   return (
     <VStack w="100%" maxW="1200px" spacing="2rem">
       <Heading as="h1" size="2xl">
         Agendamentos para petshop
       </Heading>
       <HStack w="100%" justifyContent={"space-between"} alignItems={"center"}>
-        <VStack w="70%">
-          <Input />
-          <FormLabel>Pesquisar por data</FormLabel>
+        <VStack w="80%">
+          <Input handler={handleChangeClientQuery} actualState={clientQuery} />
           <HStack w="100%">
-            <InputDate />
-            <InputDate />
-            <StatusMenu
-              state={filters.status as StatusEnum & "all"}
-              steState={(newStatus) =>
-                setFilters({
-                  ...filters,
-                  status: newStatus as StatusEnum & "all",
-                })
-              }
-              isHeaderComponent
-            />
+            <VStack w="100%">
+              <FormLabel>Pesquisar por data</FormLabel>
+              <HStack w="100%">
+                <InputDate
+                  handler={handleChangeTime}
+                  actualState={filters.startTime || ""}
+                  context="startTime"
+                />
+                <InputDate
+                  handler={handleChangeTime}
+                  actualState={filters.endTime || ""}
+                  context="endTime"
+                />
+              </HStack>
+            </VStack>
+            <VStack w="80%">
+              <FormLabel>Pesquisar status</FormLabel>
+
+              <StatusMenu
+                state={filters.status as StatusEnum & "all"}
+                setState={(newStatus) =>
+                  setFilters({
+                    ...filters,
+                    status: newStatus as StatusEnum & "all",
+                  })
+                }
+                isHeaderComponent
+              />
+            </VStack>
           </HStack>
         </VStack>
         <CreateScheduleModal>

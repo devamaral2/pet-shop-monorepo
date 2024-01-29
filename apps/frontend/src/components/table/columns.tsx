@@ -1,3 +1,4 @@
+import { Stack, useToast } from "@chakra-ui/react";
 import { ISchedule } from "@pet-shop/entities/schedule";
 import { StatusEnum } from "@pet-shop/entities/statusenum";
 import { TableColumn } from "react-data-table-component";
@@ -23,13 +24,29 @@ export const columns: TableColumn<ISchedule & { id: string }>[] = [
   },
   {
     name: "Status",
-    cell: (row) => (
-      <StatusMenu
-        state={row.status as StatusEnum}
-        setState={(newState) => {
-          updateSchedules(row.id, newState as StatusEnum);
-        }}
-      />
-    ),
+    cell: (row) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const toast = useToast();
+      return (
+        <Stack w="60%">
+          <StatusMenu
+            state={row.status as StatusEnum}
+            setState={async (newState) => {
+              try {
+                await updateSchedules(row.id, newState as StatusEnum);
+              } catch {
+                toast({
+                  title: "Erro ao atualizar status",
+                  status: "error",
+                  duration: 5000,
+                  isClosable: true,
+                  position: "top",
+                });
+              }
+            }}
+          />
+        </Stack>
+      );
+    },
   },
 ];

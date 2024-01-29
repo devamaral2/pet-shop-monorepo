@@ -1,5 +1,4 @@
 import express, { NextFunction, Request, Response } from "express";
-import { connection } from "../database/connection";
 import { errorMiddleware } from "./middlewares/error.middleware";
 import * as Routes from "./routes";
 
@@ -11,10 +10,7 @@ class Server {
     this.config();
     this.routes();
     this.app.get("/", async (_req, res) => {
-      const resu = await connection();
-      const note = await resu.query("SELECT NOW()");
-      console.info(note);
-      res.send(note);
+      res.send("Hello World");
     });
   }
 

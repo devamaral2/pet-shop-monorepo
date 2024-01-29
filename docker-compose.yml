@@ -4,23 +4,6 @@ volumes:
   pg-db:
 
 services:
-  # backend:
-  #   container_name: backend
-  #   build: .
-  #   ports:
-  #     - 8000:8000
-  #   platform: linux/x86_64
-  #   restart: always
-  #   depends_on:
-  #     db:
-  #       condition: service_started
-  #   networks:
-  #     - network
-  #   healthcheck:
-  #     test: ["CMD", "lsof", "-t", "-i:8000"]
-  #     timeout: 30s
-  #     retries: 5
-
   db-postgres:
     image: postgres:15.5-alpine
     container_name: db-postgres
@@ -33,13 +16,8 @@ services:
       POSTGRES_PASSWORD: ${PGSQL_PASSWORD}
     volumes:
       - pg-db:/var/lib/postgresql/data
-    # networks:
-    #   - app-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready-U ${PGSQL_USER}"]
       interval: 30s
       timeout: 10s
       retries: 3
-# networks:
-#   app-network:
-#     driver: bridge
