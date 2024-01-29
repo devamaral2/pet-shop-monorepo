@@ -12,12 +12,13 @@ export class ClientService {
     clientSearch,
   }: {
     clientSearch: string;
-  }): Promise<IClient[]> {
+  }): Promise<Array<IClient & { id: string }>> {
     const response = await this.repository.findAll({
       clientSearch,
     });
-    return response.map((client: ClientFromDb) => {
+    return response.map((client: ClientFromDb & { id: string }) => {
       return {
+        id: client.id,
         name: client.client_name,
         email: client.email,
         pet: {

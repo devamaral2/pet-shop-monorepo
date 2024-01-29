@@ -24,7 +24,7 @@ export class ClientRepository implements IClientRepository {
     SELECT c.*, p.*
     FROM clients c
     JOIN pets p ON c.pet_id = p.id
-    WHERE s.id = $1
+    WHERE c.id = $1
   `;
     const values = [id];
     const db = await this.connection();

@@ -8,6 +8,7 @@
   },
   "exports": {
     "./IFindAllSchedules": "./src/interfaces/findAllSchedulesProps.interface.ts",
+    "./IFindAllSchedulesDto": "./src/interfaces/findAllSchedules.dto.ts",
     "./client": "./src/entities/client/client.ts",
     "./errorsDictionary": "./src/utils/errors.dictionary.ts",
     "./pet": "./src/entities/pet/pet.ts",
