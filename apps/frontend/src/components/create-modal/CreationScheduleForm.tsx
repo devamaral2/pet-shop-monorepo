@@ -8,7 +8,7 @@ export function CreateScheduleForm({ modalRef }: { modalRef: any }) {
   const { date, handleChangeDate, handleScheduleCreation } =
     useCreateScheduleContext();
   return (
-    <VStack>
+    <VStack spacing="1rem">
       <DropSelect />
       <InputDate handler={handleChangeDate} actualState={date} />
       <Button

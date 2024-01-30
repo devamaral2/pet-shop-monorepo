@@ -26,12 +26,12 @@ export function Input({ handler, actualState, loading, ...props }: Props) {
           <Icon as={CiSearch} />
         </InputLeftElement>
         <ChakraInput
+          value={actualState}
+          onChange={(e) => handler(e.target.value)}
           _hover={{ borderColor: "green.600" }}
           _placeholder={{ color: "grey.400" }}
           _focus={{ borderColor: "green.600" }}
           color="black"
-          value={actualState}
-          onChange={(e) => handler(e.target.value)}
           backgroundColor="#F3F6F6"
           focusBorderColor="#33B740"
           borderRadius="md"

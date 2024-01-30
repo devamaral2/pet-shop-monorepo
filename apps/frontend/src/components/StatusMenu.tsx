@@ -21,16 +21,27 @@ export function StatusMenu({ state, setState, isHeaderComponent }: Props) {
     if (isHeaderComponent) statusArray.push("all" as StatusEnum);
     return statusArray;
   };
+  const stateTranslate = statusTranslator(state as StatusEnum & "all");
+
   return (
     <Stack w="100%">
       <Menu>
-        <MenuButton as={Button}>
-          {statusTranslator(state as StatusEnum & "all")}
+        <MenuButton
+          _hover={{ borderColor: "green.500" }}
+          _placeholder={{ color: "grey.400" }}
+          _focus={{ borderColor: "green.600" }}
+          color="black"
+          backgroundColor="#F3F6F6"
+          borderRadius="md"
+          as={Button}
+          bg={stateTranslate.color}
+        >
+          {stateTranslate.value}
         </MenuButton>
         <MenuList>
           {getAllStatus().map((status) => (
             <MenuItem onClick={() => setState(status)} key={status}>
-              {statusTranslator(status as StatusEnum & "all")}
+              {statusTranslator(status as StatusEnum & "all").value}
             </MenuItem>
           ))}
         </MenuList>

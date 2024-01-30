@@ -1,7 +1,7 @@
 import { fakerPT_BR } from "@faker-js/faker";
-import { Pet } from "@pet-shop/entities/pet";
+import { IPet } from "@pet-shop/entities/pet";
 
-export function creatingClientSeedQuery(pets: Array<Pet & { id: string }>) {
+export function creatingClientSeedQuery(pets: Array<IPet>) {
   const queryStringForClients =
     "INSERT INTO clients (name, email, pet_id) VALUES\n";
 

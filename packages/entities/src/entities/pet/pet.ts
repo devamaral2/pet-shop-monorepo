@@ -2,6 +2,8 @@ import { ErrorsDictionary } from "../..";
 import { SpeciesEnum } from "./enum/species.enum";
 
 export interface IPet {
+  id?: string;
+  pet_id?: string;
   name: string;
   species: SpeciesEnum;
   imageUrl?: string;

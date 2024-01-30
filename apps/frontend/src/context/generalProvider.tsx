@@ -42,10 +42,13 @@ export function GeneralProvider({ children }: { children: ReactNode }) {
     setFilters((prev) => ({ ...prev, page }));
   };
 
-  const handleChangeTime = (date: string, context: "startTime" | "endTime") => {
+  const handleChangeTime = (
+    date: string,
+    context?: "startTime" | "endTime"
+  ) => {
     setFilters((prev) => ({
       ...prev,
-      [context]: date,
+      [context || "startTime"]: date,
     }));
   };
 
@@ -88,5 +91,5 @@ export interface IGeneralContext {
   setFilters: Dispatch<React.SetStateAction<IFindAllQuery>>;
   handlePageChange: (page: number) => void;
   handleChangeClientQuery: (query: string) => void;
-  handleChangeTime: (date: string, context: "startTime" | "endTime") => void;
+  handleChangeTime: (date: string, context?: "startTime" | "endTime") => void;
 }

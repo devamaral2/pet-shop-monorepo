@@ -3,11 +3,15 @@ import {
   IFindAllSchedulesRepositoryResponse,
   ScheduleFromDb,
 } from "./findAllSchedules.interfaces";
+
+export interface ICreatingFindQueryResponse {
+  schedules: string;
+  count: string;
+  values: (string | number)[];
+}
+
 export interface IScheduleRepository {
-  creatingFindQuery(props: IFindAllSchedulesProps): {
-    query: string;
-    values: (string | number)[];
-  };
+  creatingFindQuery(props: IFindAllSchedulesProps): ICreatingFindQueryResponse;
   findAll(
     props: IFindAllSchedulesProps
   ): Promise<IFindAllSchedulesRepositoryResponse>;

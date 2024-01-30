@@ -2,6 +2,7 @@ import { ErrorsDictionary, IPet } from "../..";
 import { regex } from "../../utils/regex";
 
 export interface IClient {
+  id?: string;
   name: string;
   email: string;
   pet: IPet;

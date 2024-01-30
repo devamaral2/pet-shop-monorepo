@@ -4,7 +4,10 @@ import {
   IFindAllSchedulesRepositoryResponse,
   ScheduleFromDb,
 } from "../interfaces/findAllSchedules.interfaces";
-import { IScheduleRepository } from "../interfaces/schedule.repository.interface";
+import {
+  ICreatingFindQueryResponse,
+  IScheduleRepository,
+} from "../interfaces/schedule.repository.interface";
 
 export class ScheduleRepository implements IScheduleRepository {
   constructor(private readonly connection: () => Promise<PoolClient>) {
@@ -17,11 +20,7 @@ export class ScheduleRepository implements IScheduleRepository {
     clientSearch,
     startTime,
     endTime,
-  }: IFindAllSchedulesProps): {
-    schedules: string;
-    count: string;
-    values: (string | number)[];
-  } {
+  }: IFindAllSchedulesProps): ICreatingFindQueryResponse {
     const limit = 10;
     const offset = (page - 1) * limit;
 

@@ -1,7 +1,7 @@
 import fs from "fs";
 import { connection } from "../src/infrastructure/database/connection";
 import { creatingClientSeedQuery } from "./creatingClientSeedQuery";
-import { creatingDogsSeedQuery } from "./creatingDogsSeedQuery";
+import { creatingPetsSeedQuery } from "./creatingPetsSeedQuery";
 import { creatingScheduleSeedQuery } from "./creatingScheduleSeedQuery";
 
 async function start() {
@@ -22,7 +22,7 @@ async function start() {
     isEmpty(schedulesNumber)
   ) {
     console.info("Start seeding...");
-    const petsQuery = creatingDogsSeedQuery();
+    const petsQuery = creatingPetsSeedQuery();
     console.info("Creating Pets...");
     await db.query(petsQuery);
     const allPets = await db.query("SELECT * FROM pets");

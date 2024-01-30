@@ -1,7 +1,7 @@
 import { fakerPT_BR } from "@faker-js/faker";
 import { SpeciesEnum } from "@pet-shop/entities/speciesenum";
 
-export function creatingPetSeedQuery() {
+export function creatingPetsSeedQuery() {
   const queryStringForPets =
     "INSERT INTO pets (name, species, image_url) VALUES\n";
   const petsToCreate = new Array(60).fill("pet");

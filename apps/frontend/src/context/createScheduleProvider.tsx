@@ -1,20 +1,15 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useToast } from "@chakra-ui/react";
-import { IClient } from "@pet-shop/entities/client";
-import { useQuery } from "@tanstack/react-query";
 import {
   Dispatch,
   ReactNode,
+  SetStateAction,
   createContext,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from "react";
-import { useDebounce } from "../hookes/useDebounce";
-import {
-  createSchedule,
-  findAllClientsWithoutSchedule,
-} from "../services/createSchedule.service";
+import { createSchedule } from "../services/createSchedule.service";
 export const CreateScheduleContext = createContext<ICreateScheduleContext>(
   {} as ICreateScheduleContext
 );
@@ -23,25 +18,16 @@ export function useCreateScheduleContext() {
   return useContext(CreateScheduleContext);
 }
 
+interface ISelectedClient {
+  label: string;
+  value: string;
+}
+
 export function CreateScheduleProvider({ children }: { children: ReactNode }) {
-  const [clientQuery, setClientQuery] = useState("");
-  const [stableClientQuery, setStableClientQuery] = useState("");
   const [date, setDate] = useState("");
   const toast = useToast();
-  const [choosedClient, setChoosedClient] = useState<
-    (IClient & { id: string }) | null
-  >(null);
-  const { debouncedValue, isDebouncing } = useDebounce(clientQuery, 1000);
-
-  const { data: clients, isFetching } = useQuery({
-    queryKey: ["clients", stableClientQuery],
-    queryFn: () => findAllClientsWithoutSchedule(stableClientQuery),
-    refetchOnWindowFocus: false,
-  });
-
-  const handleChangeClientQuery = (query: string) => {
-    setClientQuery(query);
-  };
+  const [selectedClient, setSelectedClientClient] =
+    useState<ISelectedClient | null>(null);
 
   const handleChangeDate = (query: string) => {
     setDate(query);
@@ -49,7 +35,7 @@ export function CreateScheduleProvider({ children }: { children: ReactNode }) {
 
   const handleScheduleCreation = async () => {
     try {
-      await createSchedule(choosedClient?.id as string, date);
+      await createSchedule(selectedClient?.label as string, date);
       toast({
         title: "Agendamento criado com sucesso",
         status: "success",
@@ -68,18 +54,9 @@ export function CreateScheduleProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  useEffect(() => {
-    setStableClientQuery(debouncedValue);
-  }, [debouncedValue]);
-
   const provided = {
-    clients,
-    isFetching,
-    handleChangeClientQuery,
-    isDebouncing,
-    clientQuery,
-    choosedClient,
-    setChoosedClient,
+    selectedClient,
+    setSelectedClientClient,
     date,
     handleChangeDate,
     handleScheduleCreation,
@@ -94,20 +71,8 @@ export function CreateScheduleProvider({ children }: { children: ReactNode }) {
 }
 
 export interface ICreateScheduleContext {
-  clients: Array<IClient & { id: string }>;
-  isFetching: boolean;
-  isDebouncing: boolean;
-  clientQuery: string;
-  choosedClient: (IClient & { id: string }) | null;
-  setChoosedClient: Dispatch<
-    React.SetStateAction<
-      | (IClient & {
-          id: string;
-        })
-      | null
-    >
-  >;
-  handleChangeClientQuery: (query: string) => void;
+  selectedClient: ISelectedClient | null;
+  setSelectedClientClient: Dispatch<SetStateAction<ISelectedClient | null>>;
   date: string;
   handleChangeDate: (query: string) => void;
   handleScheduleCreation: () => void;

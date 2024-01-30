@@ -4,9 +4,9 @@ volumes:
   pg-db:
 
 services:
-  db-postgres:
+  db-pet:
     image: postgres:15.5-alpine
-    container_name: db-postgres
+    container_name: pet
     restart: always
     ports:
       - 5432:5432

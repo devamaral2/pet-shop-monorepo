@@ -2,9 +2,10 @@ import { ErrorsDictionary } from "../..";
 import { IClient } from "../client/client";
 import { StatusEnum } from "./enum/status.enum";
 export interface ISchedule {
+  id?: string;
   timestamp: number;
   client: IClient;
-  status: StatusEnum;
+  status?: StatusEnum;
 }
 
 export class Schedule implements ISchedule {
