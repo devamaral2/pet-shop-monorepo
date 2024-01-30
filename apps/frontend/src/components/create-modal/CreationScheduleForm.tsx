@@ -3,6 +3,7 @@ import { useCreateScheduleContext } from "../../context/createScheduleProvider";
 import { InputDate } from "../input/InputDate";
 import { DropSelect } from "./DropSelect";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function CreateScheduleForm({ modalRef }: { modalRef: any }) {
   const { date, handleChangeDate, handleScheduleCreation } =
     useCreateScheduleContext();

@@ -17,37 +17,54 @@ export class ScheduleRepository implements IScheduleRepository {
     clientSearch,
     startTime,
     endTime,
-  }: IFindAllSchedulesProps): { query: string; values: (string | number)[] } {
+  }: IFindAllSchedulesProps): {
+    schedules: string;
+    count: string;
+    values: (string | number)[];
+  } {
     const limit = 10;
     const offset = (page - 1) * limit;
 
-    let query = `
+    let schedules = `
     SELECT s.*, c.*, p.*, s.id as schedule_id, c.name as client_name, p.name as pet_name
           FROM schedules s
           JOIN clients c ON s.client_id = c.id
           JOIN pets p ON c.pet_id = p.id
           WHERE 1 = 1
         `;
+    let count = `
+    SELECT COUNT(*) 
+    FROM schedules s
+    JOIN clients c ON s.client_id = c.id
+    WHERE 1 = 1
+    `;
 
     const values = [];
 
     if (status) {
-      query += ` AND s.status = $${values.length + 1}`;
+      const string = ` AND s.status = $${values.length + 1}`;
+      schedules += string;
+      count += string;
       values.push(status);
     }
 
     if (clientSearch) {
-      query += ` AND c.name LIKE '%${clientSearch}%'`;
+      const string = ` AND c.name LIKE '%${clientSearch}%'`;
+      schedules += string;
+      count += string;
     }
 
     if (startTime && endTime) {
-      query += ` AND s.timestamp BETWEEN ${startTime} AND ${endTime}`;
+      const string = ` AND s.timestamp BETWEEN $${values.length + 1} AND $${values.length + 2}`;
+      schedules += string;
+      count += string;
     }
 
-    query += ` ORDER BY s.timestamp ASC LIMIT $${values.length + 1} OFFSET $${values.length + 2};`;
+    schedules += ` ORDER BY s.timestamp ASC LIMIT $${values.length + 1} OFFSET $${values.length + 2};`;
     values.push(limit, offset);
     return {
-      query,
+      schedules,
+      count,
       values,
     };
   }
@@ -76,7 +93,7 @@ export class ScheduleRepository implements IScheduleRepository {
     startTime,
     endTime,
   }: IFindAllSchedulesProps): Promise<IFindAllSchedulesRepositoryResponse> {
-    const { query, values } = this.creatingFindQuery({
+    const { count, schedules, values } = this.creatingFindQuery({
       page,
       status,
       clientSearch,
@@ -84,9 +101,10 @@ export class ScheduleRepository implements IScheduleRepository {
       endTime,
     });
     const db = await this.connection();
-    const total = await db.query("SELECT COUNT(*) FROM schedules");
-    const schedules = await db.query(query, values);
-    return { totalOfLines: total.rows[0].count, schedules: schedules.rows };
+    const response = await db.query(schedules, values);
+    values.splice(values.length - 2, 2);
+    const total = await db.query(count, values);
+    return { totalOfLines: total.rows[0].count, schedules: response.rows };
   }
 
   async update({ id, status }: { id: string; status: string }) {

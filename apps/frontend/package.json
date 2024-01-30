@@ -6,6 +6,7 @@
     "@pet-shop/entities": "*",
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-query-devtools": "^4.36.1",
+    "chakra-react-select": "^4.7.6",
     "framer-motion": "^11.0.3",
     "react": "^18.2.0",
     "react-data-table-component": "^7.6.2",
