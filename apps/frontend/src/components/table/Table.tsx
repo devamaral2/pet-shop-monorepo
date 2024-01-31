@@ -6,16 +6,20 @@ import { NoDataComponent } from "./NoDataComponent";
 import { paginationComponentOptions } from "./PaginationComponentOptions";
 import { columns } from "./columns";
 export function Table() {
-  const { apiResponse, isFetching, handlePageChange, filters } =
-    useGeneralContext();
+  const {
+    apiResponse,
+    isFetching,
+    handlePageChange,
+    filters,
+    handleUpdateSchedule,
+  } = useGeneralContext();
   if (isFetching) return <> </>;
   return (
     <Card>
       <DataTable
-        columns={columns}
+        columns={columns(handleUpdateSchedule)}
         style={{ padding: "2rem" }}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        data={apiResponse.schedules as any[]}
+        data={apiResponse.schedules}
         pagination
         paginationServer
         paginationTotalRows={apiResponse.totalOfLines}
