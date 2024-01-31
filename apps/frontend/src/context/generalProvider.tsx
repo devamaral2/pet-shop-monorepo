@@ -1,4 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useToast } from "@chakra-ui/react";
+import { StatusEnum } from "@pet-shop/entities/statusenum";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Dispatch,
   ReactNode,
@@ -8,9 +10,9 @@ import {
   useMemo,
   useState,
 } from "react";
-import { FindAllSchedulesDto } from "../../../../packages/entities/src/interfaces/FindAllSchedules.dto";
+import { FindAllSchedulesDto } from "../../../../packages/entities/src";
 import { useDebounce } from "../hookes/useDebounce";
-import { findAllSchedules } from "../services/general.service";
+import { findAllSchedules, updateSchedules } from "../services/general.service";
 import { IFindAllQuery } from "../utils/query.interface";
 export const GeneralContext = createContext<IGeneralContext>(
   {} as IGeneralContext
@@ -30,6 +32,10 @@ export function GeneralProvider({ children }: { children: ReactNode }) {
   });
   const [clientQuery, setClientQuery] = useState("");
 
+  const queryClient = useQueryClient();
+
+  const toast = useToast();
+
   const { debouncedValue, isDebouncing } = useDebounce(clientQuery, 1000);
 
   const { data: apiResponse, isFetching } = useQuery({
@@ -37,6 +43,38 @@ export function GeneralProvider({ children }: { children: ReactNode }) {
     queryFn: () => findAllSchedules(filters),
     refetchOnWindowFocus: false,
   });
+
+  const { mutateAsync: updateWithHttpState } = useMutation({
+    mutationFn: updateSchedules,
+    onSuccess: (_data, variables, context) => {
+      const cache = queryClient.getQueryData(["schedules"]);
+      console.log(cache);
+      console.log(variables);
+      // queryClient.setQueryData(["schedules"], (data) => {
+      //   return {
+      //       totalOfLines, schedules: cache?.schedules.map((s) => {
+      //       if (s.id === variables.id) {
+      //             return { ...s, status: variables.status};
+      //       }
+      //       return s;
+
+      //       })
+    },
+  });
+
+  const handleUpdateSchedule = async (id: string, newState: StatusEnum) => {
+    try {
+      updateWithHttpState({ id, newStatus });
+    } catch {
+      toast({
+        title: "Erro ao atualizar status",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  };
 
   const handlePageChange = (page: number) => {
     setFilters((prev) => ({ ...prev, page }));

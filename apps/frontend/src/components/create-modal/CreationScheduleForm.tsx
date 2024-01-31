@@ -14,8 +14,8 @@ export function CreateScheduleForm({ modalRef }: { modalRef: any }) {
       <Button
         colorScheme="green"
         onClick={() => {
-          modalRef.current.closeModal();
           handleScheduleCreation();
+          modalRef.current.closeModal();
         }}
       >
         Criar

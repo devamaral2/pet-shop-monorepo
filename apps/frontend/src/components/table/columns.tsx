@@ -4,8 +4,9 @@ import { StatusEnum } from "@pet-shop/entities/statusenum";
 import { TableColumn } from "react-data-table-component";
 import { updateSchedules } from "../../services/general.service";
 import { StatusMenu } from "../StatusMenu";
+import { useMutation } from "@tanstack/react-query";
 
-export const columns: TableColumn<ISchedule & { id: string }>[] = [
+export const columns: TableColumn<ISchedule>[] = [
   {
     name: "Cliente",
     selector: (row) => row.client.name,
@@ -27,13 +28,16 @@ export const columns: TableColumn<ISchedule & { id: string }>[] = [
     cell: (row) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const toast = useToast();
+      const { mutateAsync: httpStateForUpdate } = useMutation({
+        mutationFn: updateSchedules,
+      });
       return (
         <Stack w="60%">
           <StatusMenu
             state={row.status as StatusEnum}
             setState={async (newState) => {
               try {
-                await updateSchedules(row.id, newState as StatusEnum);
+                await updateSchedules(row.id as string, newState as StatusEnum);
               } catch {
                 toast({
                   title: "Erro ao atualizar status",

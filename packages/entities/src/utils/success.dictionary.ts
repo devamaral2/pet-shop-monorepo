@@ -1,10 +1,10 @@
-interface ErrorValue {
+interface SuccessValue {
   key: string;
   status: number;
   message: string;
 }
 
-export const ErrorsDictionary: Record<string, ErrorValue> = {
+export const ErrorsDictionary: Record<string, SuccessValue> = {
   CREATE_CLIENT_WITH_INVALID_EMAIL: {
     key: "CREATE_CREATE_WITH_INVALID_EMAIL",
     status: 400,

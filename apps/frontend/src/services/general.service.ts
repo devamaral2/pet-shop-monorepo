@@ -28,13 +28,19 @@ export async function findAllSchedules(props: IFindAllQuery) {
   return response.json();
 }
 
-export async function updateSchedules(id: string, status: StatusEnum) {
+export async function updateSchedules({
+  id,
+  newStatus,
+}: {
+  id: string;
+  newStatus: StatusEnum;
+}) {
   await fetch(`http://localhost:8000/schedule/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ status }),
+    body: JSON.stringify({ status: newStatus }),
   });
   queryClient.invalidateQueries(["schedules"]);
 }

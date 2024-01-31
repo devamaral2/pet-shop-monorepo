@@ -7,6 +7,6 @@ export function errorMiddleware(error: unknown, res: Response) {
     const err = ErrorsDictionary[(error as Error).message];
     res.status(err.status).json({ message: err.message });
   } catch {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Erro interno do servidor" });
   }
 }

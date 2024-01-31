@@ -19,7 +19,7 @@ export async function findAllClientsWithoutSchedule(clientSearch: string) {
 }
 export async function createSchedule(clientId: string, date: string) {
   const timestamp = new Date(date).getTime();
-  await fetch(`http://localhost:8000/schedule`, {
+  const res = await fetch(`http://localhost:8000/schedule`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,4 +30,5 @@ export async function createSchedule(clientId: string, date: string) {
     }),
   });
   queryClient.invalidateQueries(["schedules"]);
+  return res.json();
 }

@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useToast } from "@chakra-ui/react";
 import {
   Dispatch,
   ReactNode,
@@ -9,6 +8,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useDefaultToast } from "../hook/useSuccess";
 import { createSchedule } from "../services/createSchedule.service";
 export const CreateScheduleContext = createContext<ICreateScheduleContext>(
   {} as ICreateScheduleContext
@@ -25,33 +25,22 @@ interface ISelectedClient {
 
 export function CreateScheduleProvider({ children }: { children: ReactNode }) {
   const [date, setDate] = useState("");
-  const toast = useToast();
   const [selectedClient, setSelectedClientClient] =
     useState<ISelectedClient | null>(null);
+  const { defaultToast } = useDefaultToast();
 
   const handleChangeDate = (query: string) => {
     setDate(query);
   };
 
   const handleScheduleCreation = async () => {
-    try {
-      await createSchedule(selectedClient?.label as string, date);
-      toast({
-        title: "Agendamento criado com sucesso",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-      });
-    } catch {
-      toast({
-        title: "Erro ao criar agendamento",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-      });
-    }
+    const response = await createSchedule(
+      selectedClient?.value as string,
+      date
+    );
+    const responseContext =
+      response?.message === "Status Alterado con sucesso" ? "success" : "error";
+    defaultToast(response?.message as string, responseContext);
   };
 
   const provided = {
