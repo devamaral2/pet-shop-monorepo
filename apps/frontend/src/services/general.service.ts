@@ -1,6 +1,5 @@
 import { StatusEnum } from "@pet-shop/entities/statusenum";
 import { IFindAllQuery } from "../utils/query.interface";
-import queryClient from "./queryClient";
 
 export async function findAllSchedules(props: IFindAllQuery) {
   const params = new URLSearchParams();
@@ -30,17 +29,17 @@ export async function findAllSchedules(props: IFindAllQuery) {
 
 export async function updateSchedules({
   id,
-  newStatus,
+  status,
 }: {
   id: string;
-  newStatus: StatusEnum;
+  status: StatusEnum;
 }) {
-  await fetch(`http://localhost:8000/schedule/${id}`, {
+  const response = await fetch(`http://localhost:8000/schedule/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ status: newStatus }),
+    body: JSON.stringify({ status: status }),
   });
-  queryClient.invalidateQueries(["schedules"]);
+  return response.json();
 }

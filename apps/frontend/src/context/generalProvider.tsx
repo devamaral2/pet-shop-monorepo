@@ -1,6 +1,6 @@
-import { useToast } from "@chakra-ui/react";
+import { IFindAllSchedulesDto } from "@pet-shop/entities/IFindAllSchedulesDto";
 import { StatusEnum } from "@pet-shop/entities/statusenum";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   Dispatch,
   ReactNode,
@@ -10,7 +10,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { FindAllSchedulesDto } from "../../../../packages/entities/src";
+import { SuccessDictionary } from "../../../../packages/entities/src";
+import { useDefaultToast } from "../hook/useSuccess";
 import { useDebounce } from "../hookes/useDebounce";
 import { findAllSchedules, updateSchedules } from "../services/general.service";
 import { IFindAllQuery } from "../utils/query.interface";
@@ -32,47 +33,38 @@ export function GeneralProvider({ children }: { children: ReactNode }) {
   });
   const [clientQuery, setClientQuery] = useState("");
 
-  const queryClient = useQueryClient();
-
-  const toast = useToast();
+  const { defaultToast } = useDefaultToast();
 
   const { debouncedValue, isDebouncing } = useDebounce(clientQuery, 1000);
+  const [apiResponse, setApiResponse] = useState<IFindAllSchedulesDto>(
+    {} as IFindAllSchedulesDto
+  );
 
-  const { data: apiResponse, isFetching } = useQuery({
+  const { isFetching } = useQuery({
     queryKey: ["schedules", filters],
     queryFn: () => findAllSchedules(filters),
+    onSuccess: (data) => {
+      setApiResponse(data);
+    },
     refetchOnWindowFocus: false,
   });
 
-  const { mutateAsync: updateWithHttpState } = useMutation({
-    mutationFn: updateSchedules,
-    onSuccess: (_data, variables, context) => {
-      const cache = queryClient.getQueryData(["schedules"]);
-      console.log(cache);
-      console.log(variables);
-      // queryClient.setQueryData(["schedules"], (data) => {
-      //   return {
-      //       totalOfLines, schedules: cache?.schedules.map((s) => {
-      //       if (s.id === variables.id) {
-      //             return { ...s, status: variables.status};
-      //       }
-      //       return s;
-
-      //       })
-    },
-  });
-
-  const handleUpdateSchedule = async (id: string, newState: StatusEnum) => {
-    try {
-      updateWithHttpState({ id, newStatus });
-    } catch {
-      toast({
-        title: "Erro ao atualizar status",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "top",
-      });
+  const handleUpdateSchedule = async (id: string, status: StatusEnum) => {
+    const response = await updateSchedules({ id, status });
+    if (
+      response?.message === SuccessDictionary.UPDATE_SCHEDULE_SUCCESS.message
+    ) {
+      setApiResponse((prev) => ({
+        totalOfLines: prev.totalOfLines,
+        schedules: prev.schedules.map((item) => {
+          if (item.id === id) {
+            return { ...item, status };
+          }
+          return item;
+        }),
+      }));
+    } else {
+      defaultToast(response?.message, "error");
     }
   };
 
@@ -108,6 +100,7 @@ export function GeneralProvider({ children }: { children: ReactNode }) {
     handlePageChange,
     handleChangeTime,
     handleChangeClientQuery,
+    handleUpdateSchedule,
     isDebouncing,
     clientQuery,
   };
@@ -121,11 +114,12 @@ export function GeneralProvider({ children }: { children: ReactNode }) {
 }
 
 export interface IGeneralContext {
-  apiResponse: FindAllSchedulesDto;
+  apiResponse: IFindAllSchedulesDto;
   isFetching: boolean;
   isDebouncing: boolean;
   filters: IFindAllQuery;
   clientQuery: string;
+  handleUpdateSchedule: (id: string, status: StatusEnum) => void;
   setFilters: Dispatch<React.SetStateAction<IFindAllQuery>>;
   handlePageChange: (page: number) => void;
   handleChangeClientQuery: (query: string) => void;

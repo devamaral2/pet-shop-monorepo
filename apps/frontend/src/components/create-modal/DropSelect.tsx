@@ -38,7 +38,7 @@ export function DropSelect() {
               const result = await findAllClientsWithoutSchedule(
                 inputValue.toLocaleLowerCase()
               );
-              const array = result.map((client: IClient & { id: string }) => ({
+              const array = result.map((client: IClient) => ({
                 label: client.name,
                 value: client.id,
               }));

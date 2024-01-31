@@ -1,10 +1,9 @@
-import { Stack, useToast } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import { ISchedule } from "@pet-shop/entities/schedule";
 import { StatusEnum } from "@pet-shop/entities/statusenum";
 import { TableColumn } from "react-data-table-component";
-import { updateSchedules } from "../../services/general.service";
+import { useGeneralContext } from "../../context/generalProvider";
 import { StatusMenu } from "../StatusMenu";
-import { useMutation } from "@tanstack/react-query";
 
 export const columns: TableColumn<ISchedule>[] = [
   {
@@ -27,26 +26,16 @@ export const columns: TableColumn<ISchedule>[] = [
     name: "Status",
     cell: (row) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      const toast = useToast();
-      const { mutateAsync: httpStateForUpdate } = useMutation({
-        mutationFn: updateSchedules,
-      });
+      const { handleUpdateSchedule } = useGeneralContext();
       return (
         <Stack w="60%">
           <StatusMenu
             state={row.status as StatusEnum}
             setState={async (newState) => {
-              try {
-                await updateSchedules(row.id as string, newState as StatusEnum);
-              } catch {
-                toast({
-                  title: "Erro ao atualizar status",
-                  status: "error",
-                  duration: 5000,
-                  isClosable: true,
-                  position: "top",
-                });
-              }
+              await handleUpdateSchedule(
+                row.id as string,
+                newState as StatusEnum
+              );
             }}
           />
         </Stack>

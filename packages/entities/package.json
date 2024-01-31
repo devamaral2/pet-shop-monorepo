@@ -14,7 +14,8 @@
     "./pet": "./src/entities/pet/pet.ts",
     "./schedule": "./src/entities/schedule/schedule.ts",
     "./speciesenum": "./src/entities/pet/enum/species.enum.ts",
-    "./statusenum": "./src/entities/schedule/enum/status.enum.ts"
+    "./statusenum": "./src/entities/schedule/enum/status.enum.ts",
+    "./successDictionary": "./src/utils/sccuess.dictionary.ts"
   },
   "main": "./src/index.ts",
   "name": "@pet-shop/entities",

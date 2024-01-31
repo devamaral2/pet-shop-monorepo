@@ -1,5 +1,8 @@
-import { StatusEnum } from "@pet-shop/entities/statusenum";
 import { NextFunction, Request, Response } from "express";
+import {
+  StatusEnum,
+  SuccessDictionary,
+} from "../../../../../packages/entities/src";
 import { ScheduleService } from "./schedule.service";
 
 export class ScheduleController {
@@ -14,7 +17,9 @@ export class ScheduleController {
         timestamp,
         clientId,
       });
-      res.status(201).json({ message: "Agendamento criado com sucesso" });
+      res
+        .status(SuccessDictionary.CREATE_SCHEDULE_SUCCESS.status)
+        .json({ message: SuccessDictionary.CREATE_SCHEDULE_SUCCESS.message });
     } catch (error) {
       console.error(error);
       next(error);
@@ -29,7 +34,9 @@ export class ScheduleController {
         id,
         status,
       });
-      res.status(200).json({ message: "Status Alterado con sucesso" });
+      res
+        .status(SuccessDictionary.UPDATE_SCHEDULE_SUCCESS.status)
+        .json({ message: SuccessDictionary.UPDATE_SCHEDULE_SUCCESS.message });
     } catch (error) {
       console.error(error);
       next(error);
@@ -44,7 +51,7 @@ export class ScheduleController {
     try {
       const { page, clientSearch, startTime, endTime, status } = req.query;
       const response = await this.service.findAll({
-        status: status as StatusEnum,
+        status: status as StatusEnum & "all" & undefined,
         clientSearch: clientSearch as string,
         page: page ? Number(page) : undefined,
         startTime: startTime ? Number(startTime) : undefined,

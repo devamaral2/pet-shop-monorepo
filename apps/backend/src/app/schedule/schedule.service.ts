@@ -1,9 +1,9 @@
 import { IFindAllSchedulesProps } from "@pet-shop/entities/IFindAllSchedules";
 
+import { IFindAllSchedulesDto } from "@pet-shop/entities/IFindAllSchedulesDto";
 import { Client } from "@pet-shop/entities/client";
 import { ErrorsDictionary } from "@pet-shop/entities/errorsDictionary";
 import { Schedule } from "@pet-shop/entities/schedule";
-import { FindAllSchedulesDto } from "../../../../../packages/entities/src/interfaces/FindAllSchedules.dto";
 import { IClientRepository } from "../client/interfaces/client.repository.interface";
 import { IScheduleRepository } from "./interfaces/schedule.repository.interface";
 
@@ -70,7 +70,7 @@ export class ScheduleService {
     clientSearch,
     startTime,
     endTime,
-  }: IFindAllSchedulesProps): Promise<FindAllSchedulesDto> {
+  }: IFindAllSchedulesProps): Promise<IFindAllSchedulesDto> {
     const response = await this.repository.findAll({
       page,
       status,
