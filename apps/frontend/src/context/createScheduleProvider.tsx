@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { SuccessDictionary } from "@pet-shop/entities/successDictionary";
 import {
   Dispatch,
   ReactNode,
@@ -11,7 +12,7 @@ import {
 import { useDefaultToast } from "../hook/useSuccess";
 import { createSchedule } from "../services/createSchedule.service";
 export const CreateScheduleContext = createContext<ICreateScheduleContext>(
-  {} as ICreateScheduleContext,
+  {} as ICreateScheduleContext
 );
 
 export function useCreateScheduleContext() {
@@ -36,10 +37,12 @@ export function CreateScheduleProvider({ children }: { children: ReactNode }) {
   const handleScheduleCreation = async () => {
     const response = await createSchedule(
       selectedClient?.value as string,
-      date,
+      date
     );
     const responseContext =
-      response?.message === "Status Alterado con sucesso" ? "success" : "error";
+      response?.message === SuccessDictionary.CREATE_SCHEDULE_SUCCESS.message
+        ? "success"
+        : "error";
     defaultToast(response?.message as string, responseContext);
   };
 

@@ -3,6 +3,8 @@ import { connection } from "../src/infrastructure/database/connection";
 import { creatingClientSeedQuery } from "./creatingClientSeedQuery";
 import { creatingPetsSeedQuery } from "./creatingPetsSeedQuery";
 import { creatingScheduleSeedQuery } from "./creatingScheduleSeedQuery";
+import { testClientQuery } from "./testClientQuery";
+import { testPetQuery } from "./testPetQuery";
 
 async function start() {
   const sql = fs.readFileSync("./apps/backend/database.sql", "utf8");
@@ -33,6 +35,10 @@ async function start() {
     const schedulesQuery = creatingScheduleSeedQuery(allClients.rows);
     console.info("Creating Schedules...");
     await db.query(schedulesQuery);
+    const { rows } = await db.query(testPetQuery);
+    console.info("Creating test client...");
+    const petId = rows[0].id;
+    await db.query(testClientQuery(petId));
     console.info("Seed finished!");
   } else {
     console.info("Database is not empty");
