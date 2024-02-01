@@ -69,7 +69,10 @@ export class ScheduleRepository implements IScheduleRepository {
     };
   }
 
-  public creatingCreateQuery(timestamp: number, clientId: string) {
+  public creatingCreateQuery(
+    timestamp: number,
+    clientId: string
+  ): { query: string; values: (string | number)[] } {
     const query = `
     INSERT INTO schedules (timestamp, status, client_id)
     VALUES ($1, 'scheduled', $2)
@@ -78,7 +81,10 @@ export class ScheduleRepository implements IScheduleRepository {
     return { query, values: [timestamp, clientId] };
   }
 
-  public creatingUpdateQuery(id: string, status: string) {
+  public creatingUpdateQuery(
+    id: string,
+    status: string
+  ): { query: string; values: (string | number)[] } {
     const query = `
       UPDATE schedules
       SET status = $1
@@ -88,7 +94,10 @@ export class ScheduleRepository implements IScheduleRepository {
     return { query, values };
   }
 
-  public creatingFindByIdQuery(id: string) {
+  public creatingFindByIdQuery(id: string): {
+    query: string;
+    values: (string | number)[];
+  } {
     const query = `
     SELECT s.*, c.*, p.*
     FROM schedules s

@@ -20,7 +20,7 @@ export class ClientRepository implements IClientRepository {
 
   async findById(id: string): Promise<ClientFromDb> {
     const query = `
-    SELECT c.*, p.*
+    SELECT c.*, p.*, c.id as client_id, p.id as pet_id, c.name as client_name, p.name as pet_name
     FROM clients c
     JOIN pets p ON c.pet_id = p.id
     WHERE c.id = $1

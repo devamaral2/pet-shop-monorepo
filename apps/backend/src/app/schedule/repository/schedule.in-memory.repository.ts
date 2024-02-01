@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IFindAllSchedulesProps } from "@pet-shop/entities/IFindAllSchedules";
-import { IClient } from "@pet-shop/entities/client";
 import { ISchedule } from "@pet-shop/entities/schedule";
+import { SpeciesEnum } from "@pet-shop/entities/speciesenum";
 import { StatusEnum } from "@pet-shop/entities/statusenum";
-import { PoolClient } from "pg";
+import { randomUUID } from "crypto";
+import { IClientRepository } from "../../client/interfaces/client.repository.interface";
 import {
   IFindAllSchedulesRepositoryResponse,
   ScheduleFromDb,
@@ -10,18 +12,15 @@ import {
 import { IScheduleRepository } from "../interfaces/schedule.repository.interface";
 
 export class ScheduleInMemoryRepository implements IScheduleRepository {
-  private _schedules: unknown[] = [];
-  private _clients: IClient[] = [];
+  private _schedules: ISchedule[] = [];
+  private _clientRepository: IClientRepository;
 
-  constructor(private readonly connection: () => Promise<PoolClient>) {
-    this.connection = connection;
+  public constructor(clientRepository: IClientRepository) {
+    this._clientRepository = clientRepository;
   }
+
   get schedules() {
     return this._schedules;
-  }
-
-  get clients() {
-    return this._clients;
   }
 
   public async create({
@@ -31,48 +30,73 @@ export class ScheduleInMemoryRepository implements IScheduleRepository {
     timestamp: number;
     clientId: string;
   }) {
-    this.schedules.push({
+    this._schedules.push({
+      id: randomUUID(),
       timestamp,
       status: StatusEnum.SCHEDULED,
       client_id: clientId,
     });
   }
 
-  public async findAll({
-    _page,
-    _status,
-    _clientSearch,
-    _startTime,
-    _endTime,
-  }: IFindAllSchedulesProps): Promise<IFindAllSchedulesRepositoryResponse> {
+  public async findAll(
+    props: IFindAllSchedulesProps
+  ): Promise<IFindAllSchedulesRepositoryResponse> {
+    const arrayFromDb = this._schedules.map(async (schedule) => {
+      const client = await this._clientRepository.findById(
+        schedule.client_id as string
+      );
+
+      if (!client) return null;
+      const clientData = client;
+      if (!clientData) return null;
+      return {
+        schedule_id: schedule.id,
+        timestamp: schedule.timestamp,
+        status: schedule.status,
+        client_id: schedule.client_id,
+        client_name: clientData.client_name,
+        email: clientData.email,
+        pet_name: clientData.pet_name,
+        pet_id: clientData.pet_id,
+        image_url: clientData.image_url,
+        species: clientData.species,
+      };
+    });
+    const response = await Promise.all(arrayFromDb);
     return {
-      schedules: this.schedules as ISchedule,
-      count: this.schedules.length,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      schedules: response as any,
+      totalOfLines: arrayFromDb.length,
     };
   }
 
   async update({ id, status }: { id: string; status: string }) {
-    const query = `
-      UPDATE schedules
-      SET status = $1
-      WHERE id = $2
-    `;
-    const values = [status, id];
-    const db = await this.connection();
-    await db.query(query, values);
+    this._schedules = this._schedules.map((schedule) => {
+      if (schedule.id === id) {
+        return { ...schedule, status };
+      }
+      return schedule;
+    }) as ISchedule[];
   }
 
-  async findById(id: string): Promise<ScheduleFromDb> {
-    const query = `
-    SELECT s.*, c.*, p.*
-    FROM schedules s
-    JOIN clients c ON s.client_id = c.id
-    JOIN pets p ON c.pet_id = p.id
-    WHERE s.id = $1
-  `;
-    const values = [id];
-    const db = await this.connection();
-    const res = await db.query(query, values);
-    return res.rows[0];
+  async findById(id: string): Promise<ScheduleFromDb | null> {
+    const schedule = this._schedules.find((schedule) => schedule.id === id);
+    if (!schedule) return null;
+    const client = await this._clientRepository.findById(
+      schedule.client_id as string
+    );
+
+    return {
+      schedule_id: schedule.id as string,
+      timestamp: schedule.timestamp as number,
+      status: schedule.status as StatusEnum,
+      client_id: schedule.client_id as string,
+      client_name: client?.client_name as string,
+      email: client?.email as string,
+      pet_name: client?.pet_name as string,
+      pet_id: client?.pet_id as string,
+      image_url: client?.image_url as string,
+      species: client?.species as SpeciesEnum,
+    };
   }
 }

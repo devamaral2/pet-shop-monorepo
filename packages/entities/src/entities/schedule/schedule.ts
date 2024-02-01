@@ -4,8 +4,9 @@ import { StatusEnum } from "./enum/status.enum";
 export interface ISchedule {
   id?: string;
   timestamp: number;
-  client: IClient;
+  client?: IClient;
   status?: StatusEnum;
+  client_id?: string;
 }
 
 export class Schedule implements ISchedule {
@@ -15,12 +16,12 @@ export class Schedule implements ISchedule {
   constructor(props: ISchedule) {
     if (!this.isValidTimestamp(props.timestamp)) {
       throw new Error(
-        ErrorsDictionary.CREATE_SCHEDULE_WITH_INVALID_TIMESTAMP.key,
+        ErrorsDictionary.CREATE_SCHEDULE_WITH_INVALID_TIMESTAMP.key
       );
     }
     this._timestamp = props.timestamp;
     this._status = StatusEnum.SCHEDULED;
-    this._client = props.client;
+    this._client = props.client as IClient;
   }
 
   isValidStatus(status: StatusEnum): boolean {

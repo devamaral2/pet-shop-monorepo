@@ -5,11 +5,11 @@ export interface IFindAllClientsProps {
 }
 
 export interface ClientFromDb {
-  id: string;
   client_id: string;
   client_name: string;
   email: string;
   pet_name: string;
+  pet_id: string;
   species: SpeciesEnum;
   image_url: string;
 }

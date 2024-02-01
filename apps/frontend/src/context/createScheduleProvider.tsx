@@ -39,7 +39,6 @@ export function CreateScheduleProvider({ children }: { children: ReactNode }) {
   };
 
   const handleScheduleCreation = async () => {
-    console.log(selectedClient);
     try {
       scheduleVerification(
         selectedClient?.client as IClient,

@@ -28,7 +28,8 @@
     "build": "tsup build src",
     "db:up": "tsx ./src/infrastructure/database/.startDatabase.ts",
     "dev": "tsx watch src/index.ts",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test": "vitest"
   },
   "version": "1.0.0"
 }

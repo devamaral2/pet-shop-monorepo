@@ -9,7 +9,7 @@ export class ClientService {
   async findAll({
     clientSearch,
   }: {
-    clientSearch: string;
+    clientSearch?: string;
   }): Promise<IClient[]> {
     const response = await this.repository.findAll({
       clientSearch,

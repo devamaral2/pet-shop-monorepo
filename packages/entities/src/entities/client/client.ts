@@ -1,4 +1,4 @@
-import { ErrorsDictionary, IPet } from "../..";
+import { ErrorsDictionary, IPet, Pet } from "../..";
 import { regex } from "../../utils/regex";
 
 export interface IClient {
@@ -6,7 +6,8 @@ export interface IClient {
   name: string;
   client_name?: string;
   email: string;
-  pet: IPet;
+  pet?: IPet;
+  pet_id?: string;
 }
 export class Client implements IClient {
   private _name: string;
@@ -18,7 +19,7 @@ export class Client implements IClient {
     }
     this._name = props.name;
     this._email = props.email;
-    this._pet = props.pet;
+    this._pet = props.pet as Pet;
   }
 
   private emailTest(email: string) {

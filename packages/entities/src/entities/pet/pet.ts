@@ -8,6 +8,7 @@ export interface IPet {
   name?: string;
   species: SpeciesEnum;
   imageUrl?: string;
+  image_url?: string;
 }
 export class Pet implements IPet {
   private _name: string | undefined;
