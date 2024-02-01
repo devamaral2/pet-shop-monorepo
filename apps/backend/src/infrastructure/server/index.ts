@@ -31,7 +31,7 @@ class Server {
     this.app.use(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       (error: unknown, _req: Request, res: Response, _next: NextFunction) =>
-        errorMiddleware(error, res)
+        errorMiddleware(error, res),
     );
   }
 

@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
 import { Pool } from "pg";
-dotenv.config();
 
 export async function connection() {
   const pool = new Pool({

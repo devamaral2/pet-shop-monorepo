@@ -57,6 +57,7 @@ export class ScheduleRepository implements IScheduleRepository {
       const string = ` AND s.timestamp BETWEEN $${values.length + 1} AND $${values.length + 2}`;
       schedules += string;
       count += string;
+      values.push(startTime, endTime);
     }
 
     schedules += ` ORDER BY s.timestamp ASC LIMIT $${values.length + 1} OFFSET $${values.length + 2};`;

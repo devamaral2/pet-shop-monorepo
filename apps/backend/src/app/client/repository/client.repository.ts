@@ -11,9 +11,10 @@ export class ClientRepository implements IClientRepository {
   }
 
   public getAllClientsQuery({ clientSearch }: { clientSearch?: string }) {
-    return `SELECT c.*
+    return `SELECT c.*, p.*, c.id as client_id, p.id as pet_id, c.name as client_name, p.name as pet_name
      FROM clients c
-     WHERE c.name LIKE '%${clientSearch}%'
+     JOIN pets p ON c.pet_id = p.id
+     WHERE LOWER(c.name) LIKE '%${clientSearch}%'
      LIMIT 5;`;
   }
 

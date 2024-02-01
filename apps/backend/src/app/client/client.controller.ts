@@ -9,7 +9,7 @@ export class ClientController {
   async findAll(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     try {
       const { clientSearch } = req.query;

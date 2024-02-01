@@ -6,7 +6,7 @@ import { scheduleMock, scheduleWithWrongTimestampMock } from "./schedule.mock";
 describe("Testes da entidade Schedule", () => {
   it("Não é possível criar um schedule com um timestamp inferior a data atual", () => {
     expect(scheduleWithWrongTimestampMock).toThrowError(
-      ErrorsDictionary.CREATE_SCHEDULE_WITH_INVALID_TIMESTAMP.key
+      ErrorsDictionary.CREATE_SCHEDULE_WITH_INVALID_TIMESTAMP.key,
     );
   });
 
@@ -15,7 +15,7 @@ describe("Testes da entidade Schedule", () => {
       scheduleMock.status = "invalid status" as StatusEnum;
     };
     expect(updateStatus).toThrowError(
-      ErrorsDictionary.UPDATE_SCHEDULE_WITH_INVALID_STATUS.key
+      ErrorsDictionary.UPDATE_SCHEDULE_WITH_INVALID_STATUS.key,
     );
   });
 

@@ -11,7 +11,7 @@ import {
 import { useDefaultToast } from "../hook/useSuccess";
 import { createSchedule } from "../services/createSchedule.service";
 export const CreateScheduleContext = createContext<ICreateScheduleContext>(
-  {} as ICreateScheduleContext
+  {} as ICreateScheduleContext,
 );
 
 export function useCreateScheduleContext() {
@@ -36,7 +36,7 @@ export function CreateScheduleProvider({ children }: { children: ReactNode }) {
   const handleScheduleCreation = async () => {
     const response = await createSchedule(
       selectedClient?.value as string,
-      date
+      date,
     );
     const responseContext =
       response?.message === "Status Alterado con sucesso" ? "success" : "error";

@@ -4,6 +4,7 @@ import { regex } from "../../utils/regex";
 export interface IClient {
   id?: string;
   name: string;
+  client_name?: string;
   email: string;
   pet: IPet;
 }

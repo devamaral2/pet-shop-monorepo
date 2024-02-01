@@ -10,7 +10,7 @@ import { IScheduleRepository } from "./interfaces/schedule.repository.interface"
 export class ScheduleService {
   constructor(
     private readonly repository: IScheduleRepository,
-    private readonly clientRepository: IClientRepository
+    private readonly clientRepository: IClientRepository,
   ) {
     this.repository = repository;
     this.clientRepository = clientRepository;
@@ -26,7 +26,7 @@ export class ScheduleService {
     const client = await this.clientRepository.findById(clientId);
     if (!client) {
       throw new Error(
-        ErrorsDictionary.CREATE_SCHEDULE_WITH_INVALID_CLIENT_ID.key
+        ErrorsDictionary.CREATE_SCHEDULE_WITH_INVALID_CLIENT_ID.key,
       );
     }
     new Schedule({
@@ -44,7 +44,7 @@ export class ScheduleService {
     const schedulesFromUser = await this.repository.verifyIfSchedule(clientId);
     if (schedulesFromUser) {
       throw new Error(
-        ErrorsDictionary.CREATE_SCHEDULE_WITH_SCHEDULED_CLIENT.key
+        ErrorsDictionary.CREATE_SCHEDULE_WITH_SCHEDULED_CLIENT.key,
       );
     }
     return this.repository.create({

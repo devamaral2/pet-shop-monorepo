@@ -2,19 +2,22 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "yarn db:up & turbo dev",
+    "dev": "yarn db:up & dotenv -- turbo dev",
     "test": "turbo test",
     "lint": "turbo lint",
-    "db:up": "tsx ./apps/backend/scripts/.startDatabase.ts",
+    "db:up": "dotenv -- tsx ./apps/backend/scripts/.startDatabase.ts",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "docker:up": "docker compose up -d"
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down --remove-orphans &&  docker volume rm pet-shop-monorepo_pg-db"
   },
   "devDependencies": {
     "eslint": "^8.56.0",
     "@pet-shop/eslint-config": "*",
     "tsx": "^4.7.0",
     "prettier": "^3.1.1",
-    "turbo": "latest"
+    "turbo": "latest",
+    "dotenv": "^16.4.1",
+    "dotenv-cli": "^7.3.0"
   },
   "packageManager": "yarn@1.22.21",
   "workspaces": [

@@ -4,12 +4,13 @@ import { SpeciesEnum } from "./enum/species.enum";
 export interface IPet {
   id?: string;
   pet_id?: string;
-  name: string;
+  pet_name?: string;
+  name?: string;
   species: SpeciesEnum;
   imageUrl?: string;
 }
 export class Pet implements IPet {
-  private _name: string;
+  private _name: string | undefined;
   private _species: SpeciesEnum;
   private _imageUrl?: string;
   constructor(props: IPet) {

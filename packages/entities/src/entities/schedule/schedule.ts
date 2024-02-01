@@ -15,7 +15,7 @@ export class Schedule implements ISchedule {
   constructor(props: ISchedule) {
     if (!this.isValidTimestamp(props.timestamp)) {
       throw new Error(
-        ErrorsDictionary.CREATE_SCHEDULE_WITH_INVALID_TIMESTAMP.key
+        ErrorsDictionary.CREATE_SCHEDULE_WITH_INVALID_TIMESTAMP.key,
       );
     }
     this._timestamp = props.timestamp;

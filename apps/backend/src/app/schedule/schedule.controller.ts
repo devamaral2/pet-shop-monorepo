@@ -46,7 +46,7 @@ export class ScheduleController {
   async findAll(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     try {
       const { page, clientSearch, startTime, endTime, status } = req.query;

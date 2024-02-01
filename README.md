@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Este é um sistema para pet-shops que permite agendar consultas, buscar consultas registradas e alterar o status delas. A aplicação apresenta uma tabela com paginação para lidar com um grande volume de entidades no banco de dados e pesquisa usando debounce para melhorar a experiência do usuário. A aplicação se utiliza do turborepo para compartilhar configurações e entidades em comum e para possibilitar a e para facilitar a experiência do desenvolvedor que pode executar a aplicação e navegar por ela com maior facilidade. 
+Este é um sistema para pet-shops que permite agendar consultas, buscar consultas registradas e alterar o status delas. A aplicação apresenta uma tabela com paginação para lidar com um grande volume de entidades no banco de dados e pesquisa usando debounce para melhorar a experiência do usuário. A aplicação se utiliza do turborepo para compartilhar configurações e entidades em comum e para possibilitar a e para facilitar a experiência do desenvolvedor que pode executar a aplicação e navegar por ela com maior facilidade.
 
 ## Recursos
 

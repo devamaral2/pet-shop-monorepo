@@ -22,7 +22,7 @@ export async function findAllSchedules(props: IFindAllQuery) {
       headers: {
         "Content-Type": "application/json",
       },
-    }
+    },
   );
   return response.json();
 }

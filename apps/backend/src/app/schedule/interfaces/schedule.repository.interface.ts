@@ -13,7 +13,7 @@ export interface ICreatingFindQueryResponse {
 export interface IScheduleRepository {
   creatingFindQuery(props: IFindAllSchedulesProps): ICreatingFindQueryResponse;
   findAll(
-    props: IFindAllSchedulesProps
+    props: IFindAllSchedulesProps,
   ): Promise<IFindAllSchedulesRepositoryResponse>;
   create(props: { timestamp: number; clientId: string }): Promise<void>;
   update({ id, status }: { id: string; status: string }): Promise<void>;

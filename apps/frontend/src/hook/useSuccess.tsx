@@ -5,7 +5,7 @@ export function useDefaultToast() {
 
   const defaultToast = (
     message: string,
-    status: "success" | "error" | "warning"
+    status: "success" | "error" | "warning",
   ) => {
     toast({
       title: message,

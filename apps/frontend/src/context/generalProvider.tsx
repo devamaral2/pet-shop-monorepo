@@ -16,7 +16,7 @@ import { useDebounce } from "../hookes/useDebounce";
 import { findAllSchedules, updateSchedules } from "../services/general.service";
 import { IFindAllQuery } from "../utils/query.interface";
 export const GeneralContext = createContext<IGeneralContext>(
-  {} as IGeneralContext
+  {} as IGeneralContext,
 );
 
 export function useGeneralContext() {
@@ -37,7 +37,7 @@ export function GeneralProvider({ children }: { children: ReactNode }) {
 
   const { debouncedValue, isDebouncing } = useDebounce(clientQuery, 1000);
   const [apiResponse, setApiResponse] = useState<IFindAllSchedulesDto>(
-    {} as IFindAllSchedulesDto
+    {} as IFindAllSchedulesDto,
   );
 
   const { isFetching } = useQuery({
@@ -74,7 +74,7 @@ export function GeneralProvider({ children }: { children: ReactNode }) {
 
   const handleChangeTime = (
     date: string,
-    context?: "startTime" | "endTime"
+    context?: "startTime" | "endTime",
   ) => {
     setFilters((prev) => ({
       ...prev,

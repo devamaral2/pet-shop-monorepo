@@ -2,6 +2,7 @@ import queryClient from "./queryClient";
 
 export async function findAllClientsWithoutSchedule(clientSearch: string) {
   const params = new URLSearchParams();
+  console.log(clientSearch);
   if (clientSearch) {
     params.append("clientSearch", clientSearch);
   }
@@ -18,6 +19,7 @@ export async function findAllClientsWithoutSchedule(clientSearch: string) {
   return response.json();
 }
 export async function createSchedule(clientId: string, date: string) {
+  console.log(clientId, date);
   const timestamp = new Date(date).getTime();
   const res = await fetch(`http://localhost:8000/schedule`, {
     method: "POST",

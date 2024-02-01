@@ -5,7 +5,7 @@ import { TableColumn } from "react-data-table-component";
 import { StatusMenu } from "../StatusMenu";
 
 export function columns(
-  handleUpdateSchedule: (id: string, status: StatusEnum) => void
+  handleUpdateSchedule: (id: string, status: StatusEnum) => void,
 ) {
   const columns: TableColumn<ISchedule>[] = [
     {
@@ -33,7 +33,7 @@ export function columns(
             setState={async (newState) => {
               await handleUpdateSchedule(
                 row.id as string,
-                newState as StatusEnum
+                newState as StatusEnum,
               );
             }}
           />

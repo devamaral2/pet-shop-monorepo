@@ -6,7 +6,7 @@ import { petMock, petWithWrongSpeciesMock } from "../pet.mock";
 describe("Testes da entidade Pet", () => {
   it("Não é possível criar um pet com a species errada", () => {
     expect(petWithWrongSpeciesMock).toThrowError(
-      ErrorsDictionary.CREATE_PET_WITH_INVALID_SPECIES.key
+      ErrorsDictionary.CREATE_PET_WITH_INVALID_SPECIES.key,
     );
   });
 

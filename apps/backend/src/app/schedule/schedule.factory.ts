@@ -9,7 +9,7 @@ export function createScheduleController(): ScheduleController {
   const clientRepository = new ClientRepository(connection);
   const scheduleService = new ScheduleService(
     scheduleRepository,
-    clientRepository
+    clientRepository,
   );
   return new ScheduleController(scheduleService);
 }

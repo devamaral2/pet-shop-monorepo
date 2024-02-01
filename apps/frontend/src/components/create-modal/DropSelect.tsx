@@ -1,4 +1,4 @@
-import { HStack, Stack } from "@chakra-ui/react";
+import { HStack, Stack, Text } from "@chakra-ui/react";
 import { IClient } from "@pet-shop/entities/client";
 import { AsyncSelect } from "chakra-react-select";
 import { IoCloseCircleOutline } from "react-icons/io5";
@@ -20,7 +20,7 @@ export function DropSelect() {
           py=".5rem"
           px="2rem"
         >
-          <text>{selectedClient.label}</text>
+          <Text>{selectedClient.label}</Text>
           <IoCloseCircleOutline
             size="1.5rem"
             color="red"
@@ -46,7 +46,7 @@ export function DropSelect() {
                 i.label.toLowerCase().includes(inputValue.toLowerCase())
               );
               callback(values);
-            }, 100);
+            }, 1000);
           }}
           onChange={(client) => setSelectedClientClient(client)}
           value={selectedClient}

@@ -5,7 +5,7 @@ import { clientMock, clientWithWrongEmailMock } from "./client.mock";
 describe("Testes da entidade Client", () => {
   it("Não é possível criar um Client com formato de email errado", () => {
     expect(clientWithWrongEmailMock).toThrowError(
-      ErrorsDictionary.CREATE_CLIENT_WITH_INVALID_EMAIL.key
+      ErrorsDictionary.CREATE_CLIENT_WITH_INVALID_EMAIL.key,
     );
   });
 
@@ -18,7 +18,7 @@ describe("Testes da entidade Client", () => {
       clientMock.email = "eduardo.gomes";
     };
     expect(updateEmail).toThrowError(
-      ErrorsDictionary.UPDATE_CLIENT_WITH_INVALID_EMAIL.key
+      ErrorsDictionary.UPDATE_CLIENT_WITH_INVALID_EMAIL.key,
     );
   });
 });

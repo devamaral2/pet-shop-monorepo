@@ -1,5 +1,5 @@
+import { IClient } from "@pet-shop/entities/client";
 import { IClientRepository } from "./interfaces/client.repository.interface";
-import { ClientFromDb } from "./interfaces/findAllClients.interface";
 
 export class ClientService {
   constructor(private readonly repository: IClientRepository) {
@@ -10,9 +10,21 @@ export class ClientService {
     clientSearch,
   }: {
     clientSearch: string;
-  }): Promise<ClientFromDb[]> {
-    return this.repository.findAll({
+  }): Promise<IClient[]> {
+    const response = await this.repository.findAll({
       clientSearch,
+    });
+    return response.map((client) => {
+      return {
+        id: client.client_id,
+        name: client.client_name,
+        email: client.email,
+        pet: {
+          pet_name: client.pet_name,
+          species: client.species,
+          imageUrl: client.image_url,
+        },
+      };
     });
   }
 }

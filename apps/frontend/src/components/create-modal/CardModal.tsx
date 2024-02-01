@@ -80,5 +80,5 @@ export const CardModal = forwardRef(
         </Modal>
       </>
     );
-  }
+  },
 );
