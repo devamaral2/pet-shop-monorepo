@@ -69,6 +69,37 @@ export class ScheduleRepository implements IScheduleRepository {
     };
   }
 
+  public creatingCreateQuery(timestamp: number, clientId: string) {
+    const query = `
+    INSERT INTO schedules (timestamp, status, client_id)
+    VALUES ($1, 'scheduled', $2)
+    RETURNING *
+  `;
+    return { query, values: [timestamp, clientId] };
+  }
+
+  public creatingUpdateQuery(id: string, status: string) {
+    const query = `
+      UPDATE schedules
+      SET status = $1
+      WHERE id = $2
+    `;
+    const values = [status, id];
+    return { query, values };
+  }
+
+  public creatingFindByIdQuery(id: string) {
+    const query = `
+    SELECT s.*, c.*, p.*
+    FROM schedules s
+    JOIN clients c ON s.client_id = c.id
+    JOIN pets p ON c.pet_id = p.id
+    WHERE s.id = $1
+  `;
+    const values = [id];
+    return { query, values };
+  }
+
   public async create({
     timestamp,
     clientId,
@@ -77,12 +108,7 @@ export class ScheduleRepository implements IScheduleRepository {
     clientId: string;
   }) {
     const db = await this.connection();
-    const query = `
-      INSERT INTO schedules (timestamp, status, client_id)
-      VALUES ($1, 'scheduled', $2)
-      RETURNING *
-    `;
-    const values = [timestamp, clientId];
+    const { query, values } = this.creatingCreateQuery(timestamp, clientId);
     await db.query(query, values);
   }
 
@@ -108,40 +134,15 @@ export class ScheduleRepository implements IScheduleRepository {
   }
 
   async update({ id, status }: { id: string; status: string }) {
-    const query = `
-      UPDATE schedules
-      SET status = $1
-      WHERE id = $2
-    `;
-    const values = [status, id];
+    const { query, values } = this.creatingUpdateQuery(id, status);
     const db = await this.connection();
     await db.query(query, values);
   }
 
   async findById(id: string): Promise<ScheduleFromDb> {
-    const query = `
-    SELECT s.*, c.*, p.*
-    FROM schedules s
-    JOIN clients c ON s.client_id = c.id
-    JOIN pets p ON c.pet_id = p.id
-    WHERE s.id = $1
-  `;
-    const values = [id];
+    const { query, values } = this.creatingFindByIdQuery(id);
     const db = await this.connection();
     const res = await db.query(query, values);
     return res.rows[0];
-  }
-
-  async verifyIfSchedule(clientId: string): Promise<ScheduleFromDb[]> {
-    const query = `
-      SELECT s.*
-      FROM schedules s
-      WHERE s.client_id = $1
-      AND s.status = 'scheduled'
-    `;
-    const values = [clientId];
-    const db = await this.connection();
-    const res = await db.query(query, values);
-    return res.rows;
   }
 }

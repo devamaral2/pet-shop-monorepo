@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { IClient } from "@pet-shop/entities/client";
+import { ErrorsDictionary } from "@pet-shop/entities/errorsDictionary";
 import { SuccessDictionary } from "@pet-shop/entities/successDictionary";
 import {
   Dispatch,
@@ -11,6 +13,7 @@ import {
 } from "react";
 import { useDefaultToast } from "../hook/useSuccess";
 import { createSchedule } from "../services/createSchedule.service";
+import { scheduleVerification } from "../utils/schedule.verification";
 export const CreateScheduleContext = createContext<ICreateScheduleContext>(
   {} as ICreateScheduleContext
 );
@@ -22,6 +25,7 @@ export function useCreateScheduleContext() {
 interface ISelectedClient {
   label: string;
   value: string;
+  client: IClient;
 }
 
 export function CreateScheduleProvider({ children }: { children: ReactNode }) {
@@ -35,15 +39,24 @@ export function CreateScheduleProvider({ children }: { children: ReactNode }) {
   };
 
   const handleScheduleCreation = async () => {
-    const response = await createSchedule(
-      selectedClient?.value as string,
-      date
-    );
-    const responseContext =
-      response?.message === SuccessDictionary.CREATE_SCHEDULE_SUCCESS.message
-        ? "success"
-        : "error";
-    defaultToast(response?.message as string, responseContext);
+    console.log(selectedClient);
+    try {
+      scheduleVerification(
+        selectedClient?.client as IClient,
+        new Date(date).getTime()
+      );
+      const response = await createSchedule(
+        selectedClient?.value as string,
+        date
+      );
+      const responseContext =
+        response?.message === SuccessDictionary.CREATE_SCHEDULE_SUCCESS.message
+          ? "success"
+          : "error";
+      defaultToast(response?.message as string, responseContext);
+    } catch (error: any) {
+      defaultToast(ErrorsDictionary[error?.message as string].message, "error");
+    }
   };
 
   const provided = {
